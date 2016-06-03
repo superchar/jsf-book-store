@@ -1,0 +1,16 @@
+.information-message{
+    color: blue;
+    text-align: center;
+}
+.message{
+    display: block;
+    font-size: 16px;
+}
+.error{
+    color: red;
+}
+
+.messages{
+    list-style-type: none;
+    padding:0px;
+}
