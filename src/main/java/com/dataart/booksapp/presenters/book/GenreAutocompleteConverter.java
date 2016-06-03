@@ -7,12 +7,14 @@ import com.dataart.booksapp.presenters.general.AbstractAutocompleteConverter;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.inject.Named;
 
 /**
  * Created by vlobyntsev on 02.06.2016.
  */
 @ManagedBean
 @ApplicationScoped
+@Named
 public class GenreAutocompleteConverter extends AbstractAutocompleteConverter {
 
     @Inject

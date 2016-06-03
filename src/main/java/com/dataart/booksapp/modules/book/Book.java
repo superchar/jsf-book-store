@@ -73,4 +73,16 @@ public class Book {
     public void setDescription(String description) {
         this.description = description;
     }
+
+    public List<Genre> getGenres() {
+        return genres;
+    }
+
+    public List<Author> getAuthors() {
+        return authors;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
 }

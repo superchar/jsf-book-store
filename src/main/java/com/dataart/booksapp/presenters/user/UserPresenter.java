@@ -1,9 +1,10 @@
 package com.dataart.booksapp.presenters.user;
 
+import com.dataart.booksapp.modules.general.NotExistsException;
 import com.dataart.booksapp.modules.user.User;
 import com.dataart.booksapp.modules.user.UserCredentials;
-import com.dataart.booksapp.modules.user.UserExistsException;
 import com.dataart.booksapp.modules.user.UserService;
+import com.dataart.booksapp.presenters.general.AbstractPresenter;
 import com.dataart.booksapp.routing.Routes;
 
 import javax.annotation.ManagedBean;
@@ -21,7 +22,7 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 @Named
-public class UserPresenter implements Serializable {
+public class UserPresenter extends AbstractPresenter implements Serializable {
 
     @EJB
     private UserService userService;
@@ -40,7 +41,7 @@ public class UserPresenter implements Serializable {
     public Routes passRegistration() {
         try {
             userService.createNew(buildUserFromUserData());
-        } catch (UserExistsException ex) {
+        } catch (NotExistsException ex) {
             createGlobalMessage(ex.getMessage());
             return null;
         }
@@ -60,7 +61,5 @@ public class UserPresenter implements Serializable {
         return user;
     }
 
-    private void createGlobalMessage(String message) {
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, message, null));
-    }
+
 }

@@ -1,5 +1,7 @@
 package com.dataart.booksapp.modules.user;
 
+import com.dataart.booksapp.modules.general.NotExistsException;
+
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -18,9 +20,9 @@ public class UserServiceImpl implements UserService {
         return targetUser != null && targetUser.getPassword().equals(userCredentials.getPassword());
     }
 
-    public User createNew(User user) throws UserExistsException {
+    public User createNew(User user) throws NotExistsException {
         if (doesUserExist(user)) {
-            throw new UserExistsException(user.getEmail());
+            throw new NotExistsException("User", "email", user.getEmail());
         }
         return userRepository.createNew(user);
     }

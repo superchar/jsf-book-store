@@ -1,5 +1,7 @@
 package com.dataart.booksapp.modules.user;
 
+import com.dataart.booksapp.modules.general.NotExistsException;
+
 import javax.ejb.Local;
 
 /**
@@ -8,5 +10,5 @@ import javax.ejb.Local;
 @Local
 public interface UserService {
     boolean areCredentialsValid(UserCredentials userCredentials);
-    User createNew(User user) throws UserExistsException;
+    User createNew(User user) throws NotExistsException;
 }

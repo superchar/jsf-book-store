@@ -31,17 +31,19 @@
                         completeMethod="#{bookPresenter.completeAuthor}"
                         converter="#{authorAutocompleteConverter}"
                         var="author"
-                        itemValue="#{author.idAuthor}"
+                        itemValue="#{author}"
                         itemLabel="#{author.firstName}"/>
     </h:panelGroup>
    <h:panelGroup>
 
        <p:outputLabel for="genre" value="Genre:"/>
-       <p:autoComplete styleClass="form-control" id="genre" value="#{bookData.genre}"
+       <p:autoComplete styleClass="form-control"
+                       id="genre"
+                       value="#{bookData.genre}"
                        completeMethod="#{bookPresenter.completeGenre}"
                        var="genre"
                        converter="#{genreAutocompleteConverter}"
-                       itemValue="#{genre.idGenre}"
+                       itemValue="#{genre}"
                        itemLabel="#{genre.name}"/>
    </h:panelGroup>
 

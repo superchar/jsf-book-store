@@ -14,6 +14,7 @@ import javax.inject.Named;
  */
 @ManagedBean
 @ApplicationScoped
+@Named
 public class AuthorAutocompleteConverter extends AbstractAutocompleteConverter {
 
     @Inject
