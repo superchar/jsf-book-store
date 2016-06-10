@@ -45,9 +45,8 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
     }
 
     public Routes addNewBook(){
-        BookViewModel bookViewModel = buildViewModelFromBookData();
         try{
-            bookService.addNew(bookViewModel);
+            bookService.addNew(bookData.getCurrentSelectedBook());
         }
         catch (NotExistsException ex){
             createGlobalMessage(ex.getMessage());
@@ -56,13 +55,4 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
         return Routes.successfulAuthorization;
     }
 
-    private BookViewModel buildViewModelFromBookData(){
-        BookViewModel bookViewModel = new BookViewModel();
-        bookViewModel.setTitle(bookData.getTitle());
-        bookViewModel.setIsbn(bookData.getIsbn());
-        bookViewModel.setDescription(bookData.getDescription());
-        bookViewModel.setAuthor(bookData.getAuthor());
-        bookViewModel.setGenre(bookData.getGenre());
-        return bookViewModel;
-    }
 }

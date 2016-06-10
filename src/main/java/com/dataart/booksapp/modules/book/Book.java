@@ -5,6 +5,7 @@ import com.dataart.booksapp.modules.genre.Genre;
 import com.dataart.booksapp.modules.user.User;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,6 +13,10 @@ import java.util.List;
  */
 @Entity
 @Table(name = "book")
+@NamedQueries({
+        @NamedQuery(name = "book.findAll",query = "select b from Book as b"),
+        @NamedQuery(name = "book.count",query = "select count(b) from Book as b")
+})
 public class Book {
 
     @Id
@@ -28,19 +33,19 @@ public class Book {
     @JoinTable(name = "books_genres",
     joinColumns = @JoinColumn(name = "bookId"),
     inverseJoinColumns = @JoinColumn(name = "genreId"))
-    private List<Genre> genres;
+    private List<Genre> genres = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "books_authors",
     joinColumns = @JoinColumn(name = "bookId"),
     inverseJoinColumns = @JoinColumn(name = "authorId"))
-    private List<Author> authors;
+    private List<Author> authors = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "books_users",
     joinColumns = @JoinColumn(name = "bookId"),
     inverseJoinColumns = @JoinColumn(name = "userId"))
-    private List<User> users;
+    private List<User> users = new ArrayList<>();
 
     public int getIdBook() {
         return idBook;

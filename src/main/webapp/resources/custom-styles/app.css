@@ -12,5 +12,14 @@
 
 .messages{
     list-style-type: none;
-    padding:0px;
+    padding:0;
+}
+
+.block-label{
+    display: block;
+}
+
+.creation-container{
+    max-width: 500px;
+    margin: auto;
 }

@@ -3,6 +3,9 @@ package com.dataart.booksapp.modules.book;
 import com.dataart.booksapp.modules.author.AuthorViewModel;
 import com.dataart.booksapp.modules.genre.GenreViewModel;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by vlobyntsev on 03.06.2016.
  */
@@ -16,9 +19,9 @@ public class BookViewModel {
 
     private String description;
 
-    private AuthorViewModel author;
+    private List<AuthorViewModel> authors = new ArrayList<>();
 
-    private GenreViewModel genre;
+    private List<GenreViewModel> genres = new ArrayList<>();
 
     public int getIdBook() {
         return idBook;
@@ -52,19 +55,19 @@ public class BookViewModel {
         this.description = description;
     }
 
-    public AuthorViewModel getAuthor() {
-        return author;
+    public List<AuthorViewModel> getAuthors() {
+        return authors;
     }
 
-    public void setAuthor(AuthorViewModel author) {
-        this.author = author;
+    public void setAuthors(List<AuthorViewModel> authors) {
+        this.authors = authors;
     }
 
-    public GenreViewModel getGenre() {
-        return genre;
+    public List<GenreViewModel> getGenres() {
+        return genres;
     }
 
-    public void setGenre(GenreViewModel genre) {
-        this.genre = genre;
+    public void setGenres(List<GenreViewModel> genres) {
+        this.genres = genres;
     }
 }

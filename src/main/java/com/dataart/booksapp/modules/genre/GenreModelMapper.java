@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by vlobyntsev on 02.06.2016.
  */
-class GenreModelMapper {
+public class GenreModelMapper {
 
     public static GenreViewModel mapFromDomain(Genre genre){
         GenreViewModel genreViewModel = new GenreViewModel();
