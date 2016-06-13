@@ -24,4 +24,13 @@ public class GenreViewModel {
     public void setName(String name) {
         this.name = name;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof GenreViewModel){
+            GenreViewModel model = (GenreViewModel) other;
+            return this.getIdGenre() == model.getIdGenre();
+        }
+        return false;
+    }
 }

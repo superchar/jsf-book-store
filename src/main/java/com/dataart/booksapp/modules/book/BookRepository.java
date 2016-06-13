@@ -21,6 +21,14 @@ public class BookRepository {
         return book;
     }
 
+    public Book findById(int id){
+        return entityManager.find(Book.class,id);
+    }
+
+    public Book editBook(Book book){
+        return entityManager.merge(book);
+    }
+
     public long getBooksCount(){
         return entityManager.createNamedQuery("book.count",Long.class)
                 .getSingleResult();

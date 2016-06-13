@@ -17,6 +17,14 @@ public class AuthorModelMapper {
         return authorViewModel;
     }
 
+    public static List<Integer> mapViewListToIds(List<AuthorViewModel> authorViewModels){
+        List<Integer> authorsIds = new ArrayList<>();
+        for(AuthorViewModel authorViewModel: authorViewModels){
+            authorsIds.add(authorViewModel.getAuthorId());
+        }
+        return authorsIds;
+    }
+
     public static List<AuthorViewModel> mapFromDomainModelList(List<Author> domainModelList){
         List<AuthorViewModel> mappedList = new ArrayList<>();
         for(Author author : domainModelList){

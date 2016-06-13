@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vlobyntsev on 01.06.2016.
@@ -28,6 +29,12 @@ public class AuthorRepository extends AbstractRepository {
 
     public Author findById(int id){
         return  entityManager.find(Author.class,id);
+    }
+
+    public List<Author> findByIds(List<Integer> authorsIds){
+        return entityManager.createNamedQuery("author.findByIds",Author.class)
+                .setParameter("authorsIds",authorsIds)
+                .getResultList();
     }
 
     public List<Author> findByNamePrefix(String namePrefix){

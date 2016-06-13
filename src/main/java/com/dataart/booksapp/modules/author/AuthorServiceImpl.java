@@ -14,8 +14,6 @@ import java.util.function.Function;
 @ApplicationScoped
 public class AuthorServiceImpl implements AuthorService {
 
-
-
     @Inject
     private AuthorRepository authorRepository;
 

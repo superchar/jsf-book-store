@@ -1,18 +1,20 @@
 package com.dataart.booksapp.modules.book;
 
 import com.dataart.booksapp.modules.author.Author;
+import com.dataart.booksapp.modules.author.AuthorModelMapper;
 import com.dataart.booksapp.modules.author.AuthorRepository;
+import com.dataart.booksapp.modules.author.AuthorViewModel;
 import com.dataart.booksapp.modules.general.NotExistsException;
 import com.dataart.booksapp.modules.general.Preconditions;
-import com.dataart.booksapp.modules.genre.Genre;
-import com.dataart.booksapp.modules.genre.GenreRepository;
-import com.dataart.booksapp.modules.genre.GenreService;
+import com.dataart.booksapp.modules.genre.*;
 
 import javax.annotation.ManagedBean;
 import javax.ejb.Stateless;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import java.util.Collection;
 import java.util.List;
+import java.util.function.Function;
 
 /**
  * Created by vlobyntsev on 03.06.2016.
@@ -34,11 +36,11 @@ public class BookServiceImpl implements BookService {
     }
 
     public void addNew(BookViewModel bookViewModel) throws NotExistsException {
-        Genre genre = genreRepository.findById(bookViewModel.getGenres().get(0).getIdGenre());
-        Preconditions.throwNotExistsIfNull(genre);
-        Author author = authorRepository.findById(bookViewModel.getAuthors().get(0).getAuthorId());
-        Preconditions.throwNotExistsIfNull(author);
-        Book newBook = buildNewBook(bookViewModel, genre, author);
+        List<Genre> genres  = genreRepository.findByIds(GenreModelMapper.mapViewListToIds(bookViewModel.getGenres()));
+        Preconditions.throwNotExistsIfEmpty(genres);
+        List<Author> authors = authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(bookViewModel.getAuthors()));
+        Preconditions.throwNotExistsIfEmpty(authors);
+        Book newBook = buildNewBook(bookViewModel, genres, authors);
         bookRepository.addNewBook(newBook);
     }
 
@@ -46,10 +48,72 @@ public class BookServiceImpl implements BookService {
         return bookRepository.getBooksCount();
     }
 
-    private Book buildNewBook(BookViewModel bookViewModel, Genre genre, Author author) {
+    @Override
+    public void edit(BookViewModel bookViewModel) throws NotExistsException {
+        Preconditions.throwIllegalArgumentIfParamIsNull(bookViewModel);
+        Book editingBook = bookRepository.findById(bookViewModel.getIdBook());
+        Preconditions.throwNotExistsIfNull(editingBook);
+        if(wasBookChangedAfterUpdating(editingBook,bookViewModel)){
+            editingBook = updateBook(editingBook,bookViewModel);
+            bookRepository.editBook(editingBook);
+        }
+    }
+
+    @Override
+    public BookViewModel findById(int id) {
+        return BookModelMapper.mapFromDomain(bookRepository.findById(id));
+    }
+
+    private boolean wasBookChangedAfterUpdating(Book oldBook, BookViewModel editedBook){
+        return !oldBook.getTitle().equals(editedBook.getTitle()) ||
+                !oldBook.getIsbn().equals(editedBook.getIsbn()) ||
+                !oldBook.getDescription().equals(editedBook.getDescription()) ||
+                wereAuthorsChangedAfterUpdating(oldBook,editedBook) ||
+                wereGenresChangedAfterUpdating(oldBook,editedBook);
+
+
+    }
+
+    private boolean wereAuthorsChangedAfterUpdating(Book oldBook,BookViewModel editedBook){
+        return ! this.<Author,AuthorViewModel,Integer>areCollectionsEqual(oldBook.getAuthors(),
+                editedBook.getAuthors(),
+                Author::getIdAuthor,
+                AuthorViewModel::getAuthorId);
+    }
+
+    private boolean wereGenresChangedAfterUpdating(Book oldBook,BookViewModel editedBook){
+        return this.<Genre,GenreViewModel,Integer>areCollectionsEqual(oldBook.getGenres(),
+                editedBook.getGenres(),
+                Genre::getIdGenre,
+                GenreViewModel::getIdGenre);
+    }
+
+    private <TFirst,TSecond,TProperty> boolean areCollectionsEqual(Collection<TFirst> firstCollection,
+                                                                   Collection<TSecond> secondCollection,
+                                                                   Function<TFirst,TProperty> firstCollectionPropertySelector,
+                                                                   Function<TSecond,TProperty> secondCollectionPropertySelector) {
+        return firstCollection
+                .stream()
+                .allMatch(f->
+                        secondCollection.stream()
+                                .anyMatch(s->
+                                        firstCollectionPropertySelector.apply(f)
+                                                .equals(secondCollectionPropertySelector.apply(s))));
+    }
+
+    private Book updateBook(Book oldBook,BookViewModel editedBook){
+        oldBook.setTitle(editedBook.getTitle());
+        oldBook.setIsbn(editedBook.getIsbn());
+        oldBook.setDescription(editedBook.getDescription());
+        oldBook.setGenres(genreRepository.findByIds(GenreModelMapper.mapViewListToIds(editedBook.getGenres())));
+        oldBook.setAuthors(authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(editedBook.getAuthors())));
+        return oldBook;
+    }
+
+    private Book buildNewBook(BookViewModel bookViewModel, List<Genre> genres, List<Author> authors) {
         Book newBook = BookModelMapper.mapFromView(bookViewModel);
-        newBook.getGenres().add(genre);
-        newBook.getAuthors().add(author);
+        newBook.getGenres().addAll(genres);
+        newBook.getAuthors().addAll(authors);
         return newBook;
     }
 }

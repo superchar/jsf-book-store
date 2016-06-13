@@ -1,10 +1,10 @@
-package com.dataart.booksapp.validation;
+package com.dataart.booksapp.validation.user;
 
-import javax.faces.application.FacesMessage;
+import com.dataart.booksapp.validation.general.AbstractUIInputValidator;
+
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.validator.FacesValidator;
-import javax.faces.validator.Validator;
 import javax.faces.validator.ValidatorException;
 
 /**

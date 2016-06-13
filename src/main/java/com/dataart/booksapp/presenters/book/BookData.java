@@ -19,7 +19,7 @@ import java.io.Serializable;
 @Named
 public class BookData implements Serializable {
 
-    private BookViewModel currentSelectedBook;
+    private BookViewModel currentSelectedBook = new BookViewModel();
 
     public BookViewModel getCurrentSelectedBook() {
         return currentSelectedBook;

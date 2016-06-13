@@ -14,7 +14,9 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vlobyntsev on 01.06.2016.
@@ -36,19 +38,32 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
     @Inject
     private BookData bookData;
 
-    public List<AuthorViewModel> completeAuthor(String namePrefix){
+    public List<AuthorViewModel> completeAuthor(String namePrefix) {
         return authorService.findByNamePrefix(namePrefix);
     }
 
-    public List<GenreViewModel> completeGenre(String namePrefix){
-        return genreService.findByNamePrefix(namePrefix);
+    public List<GenreViewModel> completeGenre(String namePrefix) {
+        return genreService.findByNamePrefix(namePrefix)
+                .stream()
+                .filter(g -> !bookData.getCurrentSelectedBook().getGenres().contains(g))
+                .collect(Collectors.toList());
     }
 
-    public Routes addNewBook(){
+    public Routes processBookEditing(){
         try{
-            bookService.addNew(bookData.getCurrentSelectedBook());
+            bookService.edit(bookData.getCurrentSelectedBook());
         }
         catch (NotExistsException ex){
+            createGlobalMessage(ex.getMessage());
+            return null;
+        }
+        return Routes.list;
+    }
+
+    public Routes addNewBook() {
+        try {
+            bookService.addNew(bookData.getCurrentSelectedBook());
+        } catch (NotExistsException ex) {
             createGlobalMessage(ex.getMessage());
             return null;
         }

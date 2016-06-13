@@ -1,4 +1,4 @@
-package com.dataart.booksapp.validation;
+package com.dataart.booksapp.validation.general;
 
 import javax.faces.component.UIComponent;
 import javax.faces.component.UIInput;

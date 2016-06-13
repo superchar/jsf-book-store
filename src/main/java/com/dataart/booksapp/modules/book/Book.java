@@ -90,4 +90,12 @@ public class Book {
     public List<User> getUsers() {
         return users;
     }
+
+    public void setAuthors(List<Author> authors) {
+        this.authors = authors;
+    }
+
+    public void setGenres(List<Genre> genres) {
+        this.genres = genres;
+    }
 }

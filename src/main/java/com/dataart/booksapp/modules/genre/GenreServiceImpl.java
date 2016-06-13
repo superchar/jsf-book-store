@@ -24,7 +24,6 @@ public class GenreServiceImpl implements GenreService {
         return GenreModelMapper.mapFromDomainList(genreRepository.findByNamePrefix(namePrefix));
     }
 
-
     public GenreViewModel findById(int id) {
         return GenreModelMapper.mapFromDomain(genreRepository.findById(id));
     }

@@ -6,13 +6,16 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:p="http://primefaces.org/ui"  >
-
-<ui:composition template="/templates/book.xhtml">
-    <ui:define name="title">
-        <h:outputLabel value="Create new book"/>
-    </ui:define>
-    <ui:define name="action">
-        <h:commandButton value="Add" styleClass="btn btn-success" action="#{bookPresenter.addNewBook}"/>
+<ui:composition template="/templates/general.xhtml">
+    <ui:define name="content">
+        <ui:composition template="/templates/book.xhtml">
+            <ui:define name="title">
+                <h:outputLabel value="Create new book"/>
+            </ui:define>
+            <ui:define name="action">
+                <h:commandButton value="Add" styleClass="btn btn-success" action="#{bookPresenter.addNewBook}"/>
+            </ui:define>
+        </ui:composition>
     </ui:define>
 </ui:composition>
 

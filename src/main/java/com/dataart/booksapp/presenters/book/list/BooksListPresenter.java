@@ -23,6 +23,10 @@ public class BooksListPresenter implements Serializable {
         return bookLazyDataModel;
     }
 
+    public Routes addBook(){
+        return Routes.adding;
+    }
+
     public Routes editBook(){
         return Routes.editing;
     }

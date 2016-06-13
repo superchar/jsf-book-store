@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+<h:head>
+    <h:outputScript name="jquery/jquery.js" library="primefaces"/>
+    <h:outputStylesheet name="bower_components/bootstrap/dist/css/bootstrap.css"/>
+    <h:outputStylesheet name="custom-styles/app.css"/>
+</h:head>
+<h:panelGroup layout="block" styleClass="container">
+    <h:panelGroup layout="block" styleClass="col-md-3">
+        <h:form>
+            <h:panelGroup layout="block" styleClass="navbar navbar-default navbar-fixed-side">
+                <ul class="nav nav-pills nav-stacked">
+                    <li role="presentation"><h:commandLink value="Add new book" action="#{booksListPresenter.addBook}"/></li>
+                    <li role="presentation"><h:commandLink value="Edit book" action="#{booksListPresenter.editBook}"/></li>
+                </ul>
+            </h:panelGroup>
+        </h:form>
+    </h:panelGroup>
+    <h:panelGroup layout="block" styleClass="col-md-9">
+        <ui:insert name="content"/>
+    </h:panelGroup>
+
+</h:panelGroup>
+</html>
+
+

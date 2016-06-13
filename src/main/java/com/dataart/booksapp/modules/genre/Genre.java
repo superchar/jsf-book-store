@@ -11,7 +11,8 @@ import java.util.List;
 @Entity
 @Table(name = "genre")
 @NamedQueries({
-        @NamedQuery(name = "genre.findByPrefix",query = "select g from Genre as g where g.name like :namePrefix")
+        @NamedQuery(name = "genre.findByPrefix",query = "select g from Genre as g where g.name like :namePrefix"),
+        @NamedQuery(name = "genre.findByIds",query = "select g from Genre as g where g.idGenre in :genresIds")
 })
 public class Genre {
     @Id

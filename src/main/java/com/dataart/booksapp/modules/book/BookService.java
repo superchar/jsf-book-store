@@ -10,7 +10,14 @@ import java.util.List;
  */
 @Local
 public interface BookService {
+
     void addNew(BookViewModel bookViewModel) throws NotExistsException;
+
+    void edit(BookViewModel bookViewModel) throws NotExistsException;
+
     List<BookViewModel> getBooksInRange(int from, int resultsQuantity);
+
+    BookViewModel findById(int id);
+
     long getBooksCount();
 }

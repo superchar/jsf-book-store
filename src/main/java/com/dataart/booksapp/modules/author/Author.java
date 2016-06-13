@@ -12,7 +12,8 @@ import java.util.List;
 @Table(name = "author")
 @NamedQueries({
         @NamedQuery(name = "author.findAll",query = "select a from Author as a"),
-        @NamedQuery(name = "author.findByNamePrefix",query = "select a from Author as a where a.firstName like :namePrefix or a.lastName like :namePrefix")
+        @NamedQuery(name = "author.findByNamePrefix",query = "select a from Author as a where a.firstName like :namePrefix or a.lastName like :namePrefix"),
+        @NamedQuery(name = "author.findByIds",query = "select a from Author as a where a.idAuthor in :authorsIds")
 })
 public class Author {
 

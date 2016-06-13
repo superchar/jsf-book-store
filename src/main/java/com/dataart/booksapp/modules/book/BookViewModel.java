@@ -70,4 +70,13 @@ public class BookViewModel {
     public void setGenres(List<GenreViewModel> genres) {
         this.genres = genres;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof BookViewModel) {
+            BookViewModel model = (BookViewModel) other;
+            return this.getIdBook() == model.getIdBook();
+        }
+        return false;
+    }
 }
