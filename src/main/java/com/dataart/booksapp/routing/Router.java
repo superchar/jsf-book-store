@@ -13,11 +13,59 @@ import javax.inject.Named;
 @Named
 public class Router {
 
+    public Routes moveToBookAdding(){
+        return Routes.addingBook;
+    }
+
+    public Routes moveToBookEditing(){
+        return Routes.editingBook;
+    }
+
     public Routes moveToAuthorization(){
         return Routes.authorization;
     }
 
     public Routes moveToRegistration(){
         return Routes.registration;
+    }
+
+    public Routes moveToAuthentication(){
+        return Routes.authorization;
+    }
+
+    public Routes moveToBooksList(){
+        return Routes.booksList;
+    }
+
+    public Routes moveToAuthorsList(){
+        return Routes.authorsList;
+    }
+
+    public Routes moveToGenresList(){
+        return Routes.genresList;
+    }
+
+    public Routes moveToGenreEditing(){
+        return Routes.editingGenre;
+    }
+
+    public Routes moveToGenreAdding(){
+        return Routes.addingGenre;
+    }
+
+    public Routes moveToAuthorEditing(){
+        return Routes.editingAuthor;
+    }
+
+    public Routes moveToAuthorAdding(){
+        return Routes.addingAuthor;
+    }
+
+    public Routes moveToBookReading(){
+        return Routes.readingBook;
+    }
+
+    public Routes moveToMyProfile(){
+        return Routes.profile;
     }
 }

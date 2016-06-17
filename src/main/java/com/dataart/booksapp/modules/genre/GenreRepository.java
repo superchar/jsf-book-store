@@ -29,7 +29,33 @@ public class GenreRepository {
                 .getResultList();
     }
 
+    public long getCount(){
+        return entityManager.createNamedQuery("genre.getCount",Long.class)
+                .getSingleResult();
+    }
+
+    public List<Genre> getInRange(int first,int quantity){
+        return entityManager.createNamedQuery("genre.findAll",Genre.class)
+                .setFirstResult(first)
+                .setMaxResults(quantity)
+                .getResultList();
+    }
+
     public Genre findById(int id){
         return entityManager.find(Genre.class,id);
+    }
+
+    public Genre addGenre(Genre genre){
+        entityManager.persist(genre);
+        return genre;
+    }
+
+    public Genre editGenre(Genre genre){
+        return entityManager.merge(genre);
+    }
+
+    public Genre removeGenre(Genre genre){
+        entityManager.remove(genre);
+        return genre;
     }
 }

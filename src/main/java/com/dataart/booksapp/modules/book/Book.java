@@ -15,6 +15,8 @@ import java.util.List;
 @Table(name = "book")
 @NamedQueries({
         @NamedQuery(name = "book.findAll",query = "select b from Book as b"),
+        @NamedQuery(name = "book.findByCreator",query = "select b from Book as b where b.creator.idUser=:creatorId"),
+        @NamedQuery(name = "book.getCountByCreator",query = "select count(b) from Book as b where b.creator.idUser=:creatorId"),
         @NamedQuery(name = "book.count",query = "select count(b) from Book as b")
 })
 public class Book {
@@ -29,6 +31,13 @@ public class Book {
 
     private String description;
 
+    @Lob
+    private byte [] bookData;
+
+    @ManyToOne
+    @JoinColumn(name = "creatorId")
+    private User creator;
+
     @ManyToMany
     @JoinTable(name = "books_genres",
     joinColumns = @JoinColumn(name = "bookId"),
@@ -41,10 +50,7 @@ public class Book {
     inverseJoinColumns = @JoinColumn(name = "authorId"))
     private List<Author> authors = new ArrayList<>();
 
-    @ManyToMany
-    @JoinTable(name = "books_users",
-    joinColumns = @JoinColumn(name = "bookId"),
-    inverseJoinColumns = @JoinColumn(name = "userId"))
+    @ManyToMany(mappedBy = "books")
     private List<User> users = new ArrayList<>();
 
     public int getIdBook() {
@@ -97,5 +103,21 @@ public class Book {
 
     public void setGenres(List<Genre> genres) {
         this.genres = genres;
+    }
+
+    public byte[] getBookData() {
+        return bookData;
+    }
+
+    public void setBookData(byte[] bookData) {
+        this.bookData = bookData;
+    }
+
+    public User getCreator() {
+        return creator;
+    }
+
+    public void setCreator(User creator) {
+        this.creator = creator;
     }
 }

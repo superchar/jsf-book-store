@@ -8,8 +8,16 @@ import java.util.List;
  */
 public class Preconditions {//Stolen from google.collections
 
-    public static void throwNotExistsIfNull(Object object) throws NotExistsException{
-        throwExceptionIfNull(object,new NotExistsException());
+    public static void throwIllegalArgumentIfFalse(boolean condition,String message){
+        if(!condition){
+           throw new IllegalArgumentException(message);
+        }
+    }
+
+    public static void throwNotExistsIfNull(Object ... objects) throws NotExistsException{
+        for(Object object : objects){
+            throwExceptionIfNull(object,new NotExistsException());
+        }
     }
 
     public static void throwIllegalArgumentIfParamIsNull(Object object){

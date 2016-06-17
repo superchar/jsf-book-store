@@ -1,11 +1,23 @@
 package com.dataart.booksapp.presenters.book.list;
 
+import com.dataart.booksapp.helpers.FileDownloadHelper;
+import com.dataart.booksapp.modules.book.BookService;
+import com.dataart.booksapp.modules.book.BookViewModel;
+import com.dataart.booksapp.modules.general.NotExistsException;
+import com.dataart.booksapp.modules.user.UserService;
+import com.dataart.booksapp.presenters.book.BookData;
+import com.dataart.booksapp.presenters.general.AbstractPresenter;
+import com.dataart.booksapp.presenters.general.ControlsState;
+import com.dataart.booksapp.presenters.user.UserData;
+import com.dataart.booksapp.routing.Router;
 import com.dataart.booksapp.routing.Routes;
 
 import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 
 /**
@@ -14,20 +26,61 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 @Named
-public class BooksListPresenter implements Serializable {
+public class BooksListPresenter extends AbstractPresenter implements Serializable {
+
 
     @Inject
-    private BookLazyDataModel bookLazyDataModel;
+    private BookData bookData;
 
-    public BookLazyDataModel getBookLazyDataModel() {
-        return bookLazyDataModel;
+    @Inject
+    private UserData userData;
+
+    @EJB
+    private UserService userService;
+
+    @EJB
+    private BookService bookService;
+
+    @Inject
+    private Router router;
+
+    @Inject
+    private ControlsState controlsState;
+
+    public Routes requestBookAdding() {
+        bookData.setCurrentSelectedBook(new BookViewModel());
+        return router.moveToBookAdding();
     }
 
-    public Routes addBook(){
-        return Routes.adding;
+    public Routes addToFavorites() {
+        try {
+            userService.addBookToUserFavorites(bookData.getCurrentSelectedBook(), userData.getCurrentUser());
+        } catch (NotExistsException e) {
+            createGlobalMessage("Adding book to favorite was failed because on not existing of the of the entities");
+            return null;
+        }
+        return router.moveToMyProfile();
     }
 
-    public Routes editBook(){
-        return Routes.editing;
+    public void removeBook() {
+        try {
+            bookService.remove(bookData.getCurrentSelectedForDeletingBook(), userData.getCurrentUser());
+            controlsState.disableDeleting();
+        } catch (NotExistsException e) {
+            createGlobalMessage("Book selected for removing does not exist");
+        }
+    }
+
+    public Routes editBook() {
+        return router.moveToBookEditing();
+    }
+
+    public Routes downloadBook() {
+        try {
+            FileDownloadHelper.downloadContentAsTextFile(bookData.getCurrentSelectedBook().getTitle(), bookData.getCurrentSelectedBook().getBookDataText().getBytes());
+        } catch (IOException ex) {
+            createGlobalMessage("Error occurred during book downloading");
+        }
+        return null;
     }
 }

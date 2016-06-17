@@ -17,6 +17,13 @@ public class AuthorModelMapper {
         return authorViewModel;
     }
 
+    public static Author updateAuthorAccordingViewModel(Author author,AuthorViewModel authorViewModel){
+        author.setFirstName(authorViewModel.getFirstName());
+        author.setLastName(authorViewModel.getLastName());
+        author.setAuthorInfo(authorViewModel.getAuthorInfo());
+        return author;
+    }
+
     public static List<Integer> mapViewListToIds(List<AuthorViewModel> authorViewModels){
         List<Integer> authorsIds = new ArrayList<>();
         for(AuthorViewModel authorViewModel: authorViewModels){

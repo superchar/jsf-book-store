@@ -33,7 +33,7 @@ public class GenreModelMapper {
     public static Genre mapFromView(GenreViewModel genreViewModel){
         Genre genre = new Genre();
         genre.setIdGenre(genreViewModel.getIdGenre());
-        genre.setName(genre.getName());
+        genre.setName(genreViewModel.getName());
         return genre;
     }
 }

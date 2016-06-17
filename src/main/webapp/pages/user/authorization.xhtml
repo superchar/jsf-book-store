@@ -6,45 +6,41 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 
-
-<h:head>
-    <h:outputStylesheet  name="custom-styles/app.css"/>
-    <h:outputStylesheet name="bower_components/bootstrap/dist/css/bootstrap.css"/>
-</h:head>
-
-<h:body>
-    <h:panelGroup layout="block" styleClass="container">
-        <ui:composition template="/templates/navigationmenu.xhtml"/>
-        <h:messages styleClass="messages" infoClass="information-message message" globalOnly="true"/>
-    <h:form role="form">
-        <h:panelGroup layout="block" styleClass="panel panel-default">
-            <h:panelGroup layout="block" styleClass="panel-heading">User credentials</h:panelGroup>
-            <h:panelGroup layout="block" styleClass="panel-body">
-                <h:panelGroup layout="block" styleClass="form-group">
-                    <h:outputLabel for="email" value="Email:"/>
-                    <h:message for="email" errorClass="error message"/>
-                    <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.email}">
-                        <f:validator validatorId="emailValidator"/>
-                    </h:inputText>
+    <h:body>
+        <ui:decorate template="/templates/general.xhtml">
+            <ui:define name="content">
+                <h:panelGroup layout="block">
+                    <h:messages styleClass="messages" infoClass="information-message message" globalOnly="true"/>
+                    <h:form role="form">
+                        <h:panelGroup layout="block" styleClass="panel panel-default">
+                            <h:panelGroup layout="block" styleClass="panel-heading">User credentials</h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="panel-body">
+                                <h:panelGroup layout="block" styleClass="form-group">
+                                    <h:outputLabel for="email" value="Email:"/>
+                                    <h:message for="email" errorClass="error message"/>
+                                    <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.currentUser.email}">
+                                        <f:validator validatorId="emailValidator"/>
+                                    </h:inputText>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="form-group">
+                                    <h:outputLabel for="password" value="Password:"/>
+                                    <h:message for="password" errorClass="error message"/>
+                                    <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.currentUser.password}">
+                                        <f:validateLength minimum="8"/>
+                                        <f:validator validatorId="passwordValidator"/>
+                                    </h:inputSecret>
+                                </h:panelGroup>
+                                <h:panelGroup layout="block" styleClass="form-group">
+                                    <h:commandButton styleClass="btn btn-info" value="Accept" action="#{userPresenter.login}"/>
+                                </h:panelGroup>
+                            </h:panelGroup>
+                        </h:panelGroup>
+                    </h:form>
+                    <h:form>
+                        <h:commandLink styleClass="btn btn-success" value="Registration" action="#{router.moveToRegistration}"/>
+                    </h:form>
                 </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="form-group">
-                    <h:outputLabel for="password" value="Password:"/>
-                    <h:message for="password" errorClass="error message"/>
-                    <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.password}">
-                        <f:validateLength minimum="8"/>
-                        <f:validator validatorId="passwordValidator"/>
-                    </h:inputSecret>
-                </h:panelGroup>
-                <h:panelGroup layout="block" styleClass="form-group">
-                        <h:commandButton styleClass="btn btn-info" value="Accept" action="#{userPresenter.login}"/>
-                </h:panelGroup>
-            </h:panelGroup>
-        </h:panelGroup>
-    </h:form>
-        <h:form>
-        <h:commandLink styleClass="btn btn-success" value="Registration" action="#{router.moveToRegistration}"/>
-        </h:form>
-    </h:panelGroup>
-</h:body>
-
+            </ui:define>
+        </ui:decorate>
+    </h:body>
 </html>

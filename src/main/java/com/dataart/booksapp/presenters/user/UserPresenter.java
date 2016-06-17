@@ -31,8 +31,10 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
     private UserData userData;
 
     public Routes login() {
-        if (userService.areCredentialsValid(new UserCredentials(userData.getEmail(), userData.getPassword()))) {
-            return Routes.successfulAuthorization;
+        if (userService.areCredentialsValid(new UserCredentials(userData.getCurrentUser().getEmail(), userData.getCurrentUser().getPassword()))) {
+            userData.setCurrentUser(userService.findByEmail(userData.getCurrentUser()));
+            userData.setAuthenticated(true);
+            return Routes.booksList;
         }
         createGlobalMessage("Login or password is not correct");
         return null;
@@ -45,19 +47,15 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
             createGlobalMessage(ex.getMessage());
             return null;
         }
-        return Routes.successfulAuthorization;
-    }
-
-    public void setUserData(UserData userData) {
-        this.userData = userData;
+        return Routes.booksList;
     }
 
     private User buildUserFromUserData(){
         User user = new User();
-        user.setEmail(userData.getEmail());
-        user.setPassword(userData.getPassword());
-        user.setFirstName(userData.getFirstName());
-        user.setLastName(userData.getLastName());
+        user.setEmail(userData.getCurrentUser().getEmail());
+        user.setPassword(userData.getCurrentUser().getPassword());
+        user.setFirstName(userData.getCurrentUser().getFirstName());
+        user.setLastName(userData.getCurrentUser().getLastName());
         return user;
     }
 

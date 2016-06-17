@@ -1,5 +1,7 @@
 package com.dataart.booksapp.modules.book;
 
+import com.dataart.booksapp.modules.user.User;
+
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
@@ -34,10 +36,29 @@ public class BookRepository {
                 .getSingleResult();
     }
 
+    public Book remove(Book book){
+        entityManager.remove(book);
+        return book;
+    }
+
     public List<Book> getBooksInRange(int from, int resultsQuantity) {
         return entityManager.createNamedQuery("book.findAll", Book.class)
                 .setFirstResult(from)
                 .setMaxResults(resultsQuantity)
                 .getResultList();
+    }
+
+    public List<Book> findByCreator(int first,int quantity,User creator){
+        return entityManager.createNamedQuery("book.findByCreator",Book.class)
+                .setParameter("creatorId",creator.getIdUser())
+                .setFirstResult(first)
+                .setMaxResults(quantity)
+                .getResultList();
+    }
+
+    public long getCountByCreator(User creator){
+        return entityManager.createNamedQuery("book.getCountByCreator",Long.class)
+                .setParameter("creatorId",creator.getIdUser())
+                .getSingleResult();
     }
 }

@@ -4,32 +4,50 @@
     xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee 
     http://xmlns.jcp.org/xml/ns/javaee/web-facesconfig_2_2.xsd">
     <navigation-rule>
-        <from-view-id>/pages/user/authorization.xhtml</from-view-id>
+        <from-view-id>*</from-view-id>  
         <navigation-case>
-            <from-outcome>successfulAuthorization</from-outcome>
-            <to-view-id>/pages/user/successfulAuthorization.xhtml</to-view-id>
+            <from-outcome>booksList</from-outcome>
+            <to-view-id>/pages/book/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>registration</from-outcome>
-            <to-view-id>/pages/user/registration.xhtml</to-view-id>
-        </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/pages/book/list.xhtml</from-view-id>
-        <navigation-case>
-            <from-outcome>editing</from-outcome>
-            <to-view-id>/pages/book/edit.xhtml</to-view-id>
+            <from-outcome>authorsList</from-outcome>
+            <to-view-id>/pages/author/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
-            <from-outcome>adding</from-outcome>
-            <to-view-id>/pages/book/addnew.xhtml</to-view-id>
+            <from-outcome>genresList</from-outcome>
+            <to-view-id>/pages/genres/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
-    </navigation-rule>
-    <navigation-rule>
-        <from-view-id>/pages/book/addnew.xhtml</from-view-id>
         <navigation-case>
-            <from-outcome>list</from-outcome>
-            <to-view-id>/pages/book/list.xhtml</to-view-id>
+            <from-outcome>addingBook</from-outcome>
+            <to-view-id>/pages/book/addnew.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editingBook</from-outcome>
+            <to-view-id>/pages/book/edit.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editingGenre</from-outcome>
+            <to-view-id>/pages/genres/editing.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addingGenre</from-outcome>
+            <to-view-id>/pages/genres/adding.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>editingAuthor</from-outcome>
+            <to-view-id>/pages/author/editing.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>addingAuthor</from-outcome>
+            <to-view-id>/pages/author/adding.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>readingBook</from-outcome>
+            <to-view-id>/pages/book/reading.xhtml?faces-redirect=true</to-view-id>
+        </navigation-case>
+        <navigation-case>
+            <from-outcome>profile</from-outcome>
+            <to-view-id>/pages/user/favorite_books/list.xhtml</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

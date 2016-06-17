@@ -7,12 +7,15 @@ import com.dataart.booksapp.modules.book.BookViewModel;
 import com.dataart.booksapp.modules.general.NotExistsException;
 import com.dataart.booksapp.modules.genre.*;
 import com.dataart.booksapp.presenters.general.AbstractPresenter;
+import com.dataart.booksapp.presenters.user.UserData;
+import com.dataart.booksapp.routing.Router;
 import com.dataart.booksapp.routing.Routes;
 
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.Arrays;
 import java.util.List;
@@ -38,6 +41,12 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
     @Inject
     private BookData bookData;
 
+    @Inject
+    private UserData userData;
+
+    @Inject
+    private Router router;
+
     public List<AuthorViewModel> completeAuthor(String namePrefix) {
         return authorService.findByNamePrefix(namePrefix);
     }
@@ -57,17 +66,21 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
             createGlobalMessage(ex.getMessage());
             return null;
         }
-        return Routes.list;
+        return router.moveToBooksList();
     }
 
     public Routes addNewBook() {
         try {
-            bookService.addNew(bookData.getCurrentSelectedBook());
+            bookService.addNew(bookData.getCurrentSelectedBook(),userData.getCurrentUser());
         } catch (NotExistsException ex) {
             createGlobalMessage(ex.getMessage());
             return null;
         }
-        return Routes.successfulAuthorization;
+        catch (IOException ex){
+            createGlobalMessage("Error occurred during reading book content");
+            return null;
+        }
+        return Routes.booksList;
     }
 
 }

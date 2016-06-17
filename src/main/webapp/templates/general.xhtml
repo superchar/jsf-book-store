@@ -10,22 +10,25 @@
     <h:outputStylesheet name="bower_components/bootstrap/dist/css/bootstrap.css"/>
     <h:outputStylesheet name="custom-styles/app.css"/>
 </h:head>
-<h:panelGroup layout="block" styleClass="container">
-    <h:panelGroup layout="block" styleClass="col-md-3">
+
+<h:panelGroup layout="block" styleClass="navbar navbar-inverse">
+    <h:panelGroup layout="block" styleClass="container-fluid">
+        <h:panelGroup layout="block" styleClass="navbar-header">
+            <h:form>
+                <h:commandLink styleClass="navbar-brand" value="Books"/>
+            </h:form>
+        </h:panelGroup>
         <h:form>
-            <h:panelGroup layout="block" styleClass="navbar navbar-default navbar-fixed-side">
-                <ul class="nav nav-pills nav-stacked">
-                    <li role="presentation"><h:commandLink value="Add new book" action="#{booksListPresenter.addBook}"/></li>
-                    <li role="presentation"><h:commandLink value="Edit book" action="#{booksListPresenter.editBook}"/></li>
-                </ul>
-            </h:panelGroup>
+        <ul class="nav navbar-nav">
+            <li><h:commandLink value="Books" action="#{router.moveToBooksList}"/></li>
+            <li><h:commandLink value="Authors" action="#{router.moveToAuthorsList}"/></li>
+            <li><h:commandLink value="Genres" action="#{router.moveToGenresList}"/></li>
+            <li><h:commandLink value="My profile"  action="#{router.moveToMyProfile}"/></li>
+        </ul>
         </h:form>
     </h:panelGroup>
-    <h:panelGroup layout="block" styleClass="col-md-9">
-        <ui:insert name="content"/>
-    </h:panelGroup>
-
 </h:panelGroup>
+<ui:insert name="content"/>
 </html>
 
 

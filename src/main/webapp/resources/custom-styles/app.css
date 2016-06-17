@@ -19,7 +19,12 @@
     display: block;
 }
 
-.creation-container{
+.center-container{
     max-width: 500px;
     margin: auto;
+}
+a.disabled {
+    pointer-events: none;
+    cursor: default;
+    color: gray;
 }

@@ -21,11 +21,21 @@ public class BookData implements Serializable {
 
     private BookViewModel currentSelectedBook = new BookViewModel();
 
+    private BookViewModel currentSelectedForDeletingBook = new BookViewModel();
+
     public BookViewModel getCurrentSelectedBook() {
         return currentSelectedBook;
     }
 
     public void setCurrentSelectedBook(BookViewModel currentSelectedBook) {
         this.currentSelectedBook = currentSelectedBook;
+    }
+
+    public BookViewModel getCurrentSelectedForDeletingBook() {
+        return currentSelectedForDeletingBook;
+    }
+
+    public void setCurrentSelectedForDeletingBook(BookViewModel currentSelectedForDeletingBook) {
+        this.currentSelectedForDeletingBook = currentSelectedForDeletingBook;
     }
 }

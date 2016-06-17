@@ -21,25 +21,25 @@
                     <h:panelGroup layout="block" styleClass="form-group">
                         <h:outputLabel for="email" value="Email:"/>
                         <h:message for="email" errorClass="error message"/>
-                        <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.email}">
+                        <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.currentUser.email}">
                             <f:validator validatorId="emailValidator"/>
                         </h:inputText>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="form-group">
                         <h:outputLabel for="password" value="Password:"/>
                         <h:message for="password" errorClass="error message"/>
-                        <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.password}">
+                        <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.currentUser.password}">
                             <f:validateLength minimum="8"/>
                             <f:validator validatorId="passwordValidator"/>
                         </h:inputSecret>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="form-group">
                         <h:outputLabel for="firstName" value="First name:"/>
-                        <h:inputText id="firstName" value="#{userData.firstName}" styleClass="form-control"/>
+                        <h:inputText id="firstName" value="#{userData.currentUser.firstName}" styleClass="form-control"/>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="form-group">
                         <h:outputLabel for="lastName" value="Last name:"/>
-                        <h:inputText id="lastName" value="#{userData.lastName}" styleClass="form-control"/>
+                        <h:inputText id="lastName" value="#{userData.currentUser.lastName}" styleClass="form-control"/>
                     </h:panelGroup>
                     <h:panelGroup layout="block" styleClass="form-group"><h:commandButton styleClass="btn btn-info" value="Create new user" action="#{userPresenter.passRegistration}"/></h:panelGroup>
                 </h:panelGroup>

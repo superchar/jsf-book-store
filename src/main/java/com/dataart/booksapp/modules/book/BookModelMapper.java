@@ -29,6 +29,7 @@ public class BookModelMapper {
         bookViewModel.setTitle(book.getTitle());
         bookViewModel.setAuthors(AuthorModelMapper.mapFromDomainModelList(book.getAuthors()));
         bookViewModel.setGenres(GenreModelMapper.mapFromDomainList(book.getGenres()));
+        bookViewModel.setBookDataText(new String(book.getBookData()));
         return bookViewModel;
     }
 

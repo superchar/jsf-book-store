@@ -3,6 +3,7 @@ package com.dataart.booksapp.modules.book;
 import com.dataart.booksapp.modules.author.AuthorViewModel;
 import com.dataart.booksapp.modules.genre.GenreViewModel;
 
+import javax.servlet.http.Part;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -18,6 +19,10 @@ public class BookViewModel {
     private String isbn;
 
     private String description;
+
+    private Part bookDataPart;
+
+    private String bookDataText;
 
     private List<AuthorViewModel> authors = new ArrayList<>();
 
@@ -55,6 +60,14 @@ public class BookViewModel {
         this.description = description;
     }
 
+    public Part getBookDataPart() {
+        return bookDataPart;
+    }
+
+    public void setBookDataPart(Part bookDataPart) {
+        this.bookDataPart = bookDataPart;
+    }
+
     public List<AuthorViewModel> getAuthors() {
         return authors;
     }
@@ -69,6 +82,14 @@ public class BookViewModel {
 
     public void setGenres(List<GenreViewModel> genres) {
         this.genres = genres;
+    }
+
+    public String getBookDataText() {
+        return bookDataText;
+    }
+
+    public void setBookDataText(String bookDataText) {
+        this.bookDataText = bookDataText;
     }
 
     @Override

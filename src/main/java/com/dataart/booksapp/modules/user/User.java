@@ -4,6 +4,7 @@ import com.dataart.booksapp.modules.book.Book;
 import com.mysql.cj.jdbc.MysqlDataSource;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,7 +13,10 @@ import java.util.List;
 @Table(name = "user")
 @Entity
 @NamedQueries({
-        @NamedQuery(name = "user.findByEmail",query = "select u from User as u where u.email=:email")
+        @NamedQuery(name = "user.findByEmail",query = "select u from User as u where u.email=:email"),
+        @NamedQuery(name = "user.isBookInFavoriteList",query = "select count(u) > 0 from User as u join u.books as b where b.idBook=:bookId and u.idUser=:userId"),
+        @NamedQuery(name = "user.getFavoriteBooks",query = "select b from User as u join u.books as b where u.idUser=:userId"),
+        @NamedQuery(name = "user.getFavoriteBooksCount",query = "select count(b) from User as u join u.books as b where u.idUser=:userId")
 })
 public class User {
 
@@ -28,8 +32,11 @@ public class User {
 
     private String lastName;
 
-    @ManyToMany(mappedBy = "users")
-    private List<Book> books;
+    @ManyToMany
+    @JoinTable(name = "books_users",
+            inverseJoinColumns = @JoinColumn(name = "bookId"),
+            joinColumns = @JoinColumn(name = "userId"))
+    private List<Book> books = new ArrayList<>();
 
     public int getIdUser() {
         return idUser;
@@ -69,5 +76,9 @@ public class User {
 
     public void setLastName(String lastName) {
         this.lastName = lastName;
+    }
+
+    public List<Book> getBooks() {
+        return books;
     }
 }

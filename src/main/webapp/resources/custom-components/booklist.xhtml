@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:p="http://primefaces.org/ui">
+<cc:interface>
+    <cc:attribute name="selection"/>
+    <cc:attribute name="lazyDataModel"/>
+    <cc:attribute name="rowSelectCallback" method-signature="void listener()"/>
+    <cc:attribute name="rowUnselectCallback" method-signature="void listener()"/>
+    <cc:attribute name="render"/>
+</cc:interface>
+<cc:implementation>
+    <h:form id="test">
+        <p:dataTable var="book" value="#{cc.attrs.lazyDataModel}"  paginator="true" rows="10"
+                     selectionMode="single" selection="#{cc.attrs.selection}"
+                     paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+                     lazy="true">
+            <p:ajax event="rowSelect" listener="#{cc.attrs.rowSelectCallback}" update="#{cc.attrs.render}" />
+            <p:ajax event="rowUnselect" listener="#{cc.attrs.rowUnselectCallback}" update="#{cc.attrs.render}"/>
+            <p:column headerText="Book title">
+                <h:outputLabel value="#{book.title}"/>
+            </p:column>
+            <p:column headerText="ISBN">
+                <h:outputLabel value="#{book.isbn}"/>
+            </p:column>
+            <p:column headerText="Description">
+                <h:outputLabel value="#{book.description}"/>
+            </p:column>
+            <p:column headerText="Authors">
+                <ul>
+                    <ui:repeat value="#{book.authors}" var="author">
+                        <li>#{author.firstName} #{author.lastName}</li>
+                    </ui:repeat>
+                </ul>
+            </p:column>
+            <p:column headerText="Genres">
+                <ul>
+                    <ui:repeat value="#{book.genres}" var="genre">
+                        <li>#{genre.name}</li>
+                    </ui:repeat>
+                </ul>
+            </p:column>
+        </p:dataTable>
+    </h:form>
+</cc:implementation>
+
+</html>
