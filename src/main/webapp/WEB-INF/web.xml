@@ -11,11 +11,15 @@
       <param-name>loginUrl</param-name>
       <param-value>/pages/user/authorization.jsf</param-value>
     </init-param>
+    <init-param>
+      <param-name>unsecuredUrls</param-name>
+      <param-value>/pages/user/registration.jsf</param-value>
+    </init-param>
   </filter>
 
   <filter-mapping>
     <filter-name>login</filter-name>
-    <url-pattern>/*</url-pattern>
+    <url-pattern>*.jsf</url-pattern>
   </filter-mapping>
 
   <servlet>

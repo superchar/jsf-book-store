@@ -22,7 +22,7 @@ public class Router {
     }
 
     public Routes moveToAuthorization(){
-        return Routes.authorization;
+        return Routes.authentication;
     }
 
     public Routes moveToRegistration(){
@@ -30,7 +30,7 @@ public class Router {
     }
 
     public Routes moveToAuthentication(){
-        return Routes.authorization;
+        return Routes.authentication;
     }
 
     public Routes moveToBooksList(){
@@ -68,4 +68,5 @@ public class Router {
     public Routes moveToMyProfile(){
         return Routes.profile;
     }
+
 }

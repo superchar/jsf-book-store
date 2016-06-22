@@ -5,6 +5,7 @@ import com.dataart.booksapp.modules.user.User;
 import com.dataart.booksapp.modules.user.UserCredentials;
 import com.dataart.booksapp.modules.user.UserService;
 import com.dataart.booksapp.presenters.general.AbstractPresenter;
+import com.dataart.booksapp.routing.Router;
 import com.dataart.booksapp.routing.Routes;
 
 import javax.annotation.ManagedBean;
@@ -28,6 +29,9 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
     private UserService userService;
 
     @Inject
+    private Router router;
+
+    @Inject
     private UserData userData;
 
     public Routes login() {
@@ -38,6 +42,11 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
         }
         createGlobalMessage("Login or password is not correct");
         return null;
+    }
+
+    public Routes logout(){
+        userData.setAuthenticated(false);
+        return router.moveToAuthentication();
     }
 
     public Routes passRegistration() {

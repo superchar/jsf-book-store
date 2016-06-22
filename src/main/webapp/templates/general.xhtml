@@ -18,13 +18,15 @@
                 <h:commandLink styleClass="navbar-brand" value="Books"/>
             </h:form>
         </h:panelGroup>
-        <h:form>
         <ul class="nav navbar-nav">
-            <li><h:commandLink value="Books" action="#{router.moveToBooksList}"/></li>
-            <li><h:commandLink value="Authors" action="#{router.moveToAuthorsList}"/></li>
-            <li><h:commandLink value="Genres" action="#{router.moveToGenresList}"/></li>
-            <li><h:commandLink value="My profile"  action="#{router.moveToMyProfile}"/></li>
+            <li><h:link value="Books" outcome="#{router.moveToBooksList()}"/></li>
+            <li><h:link value="Authors" outcome="#{router.moveToAuthorsList()}"/></li>
+            <li><h:link value="Genres" outcome="#{router.moveToGenresList()}"/></li>
+            <li><h:link value="My profile" rendered="#{userData.authenticated}" outcome="#{router.moveToMyProfile()}"/><h:link rendered="#{!userData.authenticated}" outcome="#{router.moveToRegistration()}" value="Registration"/></li>
         </ul>
+        <h:form rendered="#{userData.authenticated}">
+            <h:outputLabel value="You are logged in as #{userData.currentUser.email}"/>
+            <h:commandButton value="Logout" action="#{userPresenter.logout}"/>
         </h:form>
     </h:panelGroup>
 </h:panelGroup>

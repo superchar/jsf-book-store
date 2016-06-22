@@ -6,7 +6,7 @@ import javax.faces.bean.ManagedBean;
  * Created by vlobyntsev on 31.05.2016.
  */
 public enum Routes {
-    authorization,
+    authentication,
     successfulAuthorization,
     registration,
     editingBook,

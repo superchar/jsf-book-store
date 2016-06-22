@@ -49,5 +49,9 @@
             <from-outcome>profile</from-outcome>
             <to-view-id>/pages/user/favorite_books/list.xhtml</to-view-id>
         </navigation-case>
+        <navigation-case>
+            <from-outcome>authentication</from-outcome>
+            <to-view-id>/pages/user/authorization.xhtml</to-view-id>
+        </navigation-case>
     </navigation-rule>
 </faces-config>
