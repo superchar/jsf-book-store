@@ -32,10 +32,12 @@
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="firstName" value="First name:"/>
-                            <h:inputText id="firstName" value="#{userData.currentUser.firstName}" styleClass="form-control"/>
+                            <h:message for="firstName" errorClass="error message"/>
+                            <h:inputText id="firstName" required="true" value="#{userData.currentUser.firstName}" styleClass="form-control"/>
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="lastName" value="Last name:"/>
+                            <h:message for="lastName" errorClass="error message"/>
                             <h:inputText id="lastName" value="#{userData.currentUser.lastName}" styleClass="form-control"/>
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group"><h:commandButton styleClass="btn btn-info" value="Create new user" action="#{userPresenter.passRegistration}"/></h:panelGroup>

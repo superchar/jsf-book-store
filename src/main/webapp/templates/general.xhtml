@@ -7,8 +7,8 @@
       xmlns:f="http://xmlns.jcp.org/jsf/core">
 <h:head>
     <h:outputScript name="jquery/jquery.js" library="primefaces"/>
-    <h:outputStylesheet library="bower_components" name="/bootstrap/dist/css/bootstrap.css"/>
     <h:outputStylesheet library="custom-styles" name="app.css"/>
+    <h:outputStylesheet library="bower_components" name="/bootstrap/dist/css/bootstrap.css"/>
 </h:head>
 
 <h:panelGroup layout="block" styleClass="navbar navbar-inverse">
@@ -24,9 +24,9 @@
             <li><h:link value="Genres" outcome="#{router.moveToGenresList()}"/></li>
             <li><h:link value="My profile" rendered="#{userData.authenticated}" outcome="#{router.moveToMyProfile()}"/><h:link rendered="#{!userData.authenticated}" outcome="#{router.moveToRegistration()}" value="Registration"/></li>
         </ul>
-        <h:form rendered="#{userData.authenticated}">
-            <h:outputLabel value="You are logged in as #{userData.currentUser.email}"/>
-            <h:commandButton value="Logout" action="#{userPresenter.logout}"/>
+        <h:form rendered="#{userData.authenticated}" styleClass="pull-right login-form">
+            <h:outputLabel styleClass="email" value="#{userData.currentUser.email}"/>
+            <h:commandButton value="Logout" styleClass="btn btn-danger" action="#{userPresenter.logout}"/>
         </h:form>
     </h:panelGroup>
 </h:panelGroup>

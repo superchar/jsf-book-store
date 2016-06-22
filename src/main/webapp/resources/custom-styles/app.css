@@ -43,3 +43,16 @@ a.disabled {
     overflow-wrap: break-word;
     text-align: center;
 }
+.email{
+    font-size: 16px;
+    color: white;
+    margin-right: 8px;
+}
+.panel-default > .creation-panel-header{
+    background-color: black;
+    font-size: 20px;
+    color: white;
+}
+.login-form{
+    margin-top: 8px;
+}
