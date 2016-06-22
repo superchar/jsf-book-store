@@ -10,10 +10,14 @@
 <cc:interface>
     <cc:attribute name="validationEnabled"/>
     <cc:attribute name="submitingLabel"/>
-    <cc:attribute name="submitingAction"/>
+    <cc:attribute name="submitingAction" method-signature="void method()"/>
+    <cc:attribute name="genreTitle"/>
 </cc:interface>
 <cc:implementation>
     <ui:decorate template="/templates/creationpanel.xhtml">
+        <ui:define name="title">
+            <h:outputLabel value="#{cc.attrs.genreTitle}"/>
+        </ui:define>
         <ui:define name="panel-body">
             <h:form>
                 <h:panelGroup layout="block" styleClass="form-group">
