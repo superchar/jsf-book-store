@@ -24,4 +24,6 @@ public interface GenreService {
     void addGenre(GenreViewModel addingGenreModel);
 
     void remove(GenreViewModel removingGenreModel) throws NotExistsException;
+
+    boolean canEditGenre(GenreViewModel genreViewModel) throws NotExistsException;
 }

@@ -71,12 +71,13 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public void edit(BookViewModel bookViewModel) throws NotExistsException {
+    public BookViewModel edit(BookViewModel bookViewModel) throws NotExistsException, IOException {
         Book editingBook = loadBookFromViewModel(bookViewModel);
         if (wasBookChangedAfterUpdating(editingBook, bookViewModel)) {
             editingBook = updateBook(editingBook, bookViewModel);
             bookRepository.editBook(editingBook);
         }
+        return BookModelMapper.mapFromDomain(editingBook);
     }
 
     @Override
@@ -99,7 +100,8 @@ public class BookServiceImpl implements BookService {
                 !oldBook.getIsbn().equals(editedBook.getIsbn()) ||
                 !oldBook.getDescription().equals(editedBook.getDescription()) ||
                 wereAuthorsChangedAfterUpdating(oldBook, editedBook) ||
-                wereGenresChangedAfterUpdating(oldBook, editedBook);
+                wereGenresChangedAfterUpdating(oldBook, editedBook) ||
+                wasBookdataChangedAfterUpdating(editedBook);
     }
 
     private boolean wereAuthorsChangedAfterUpdating(Book oldBook, BookViewModel editedBook) {
@@ -107,6 +109,10 @@ public class BookServiceImpl implements BookService {
                 editedBook.getAuthors(),
                 Author::getIdAuthor,
                 AuthorViewModel::getAuthorId);
+    }
+
+    private boolean wasBookdataChangedAfterUpdating(BookViewModel bookViewModel) {
+        return bookViewModel.getBookDataPart() != null && bookViewModel.getBookDataPart().getSize() > 0;
     }
 
     private boolean wereGenresChangedAfterUpdating(Book oldBook, BookViewModel editedBook) {
@@ -129,12 +135,15 @@ public class BookServiceImpl implements BookService {
                                                 .equals(secondCollectionPropertySelector.apply(s))));
     }
 
-    private Book updateBook(Book oldBook, BookViewModel editedBook) {
+    private Book updateBook(Book oldBook, BookViewModel editedBook) throws IOException {
         oldBook.setTitle(editedBook.getTitle());
         oldBook.setIsbn(editedBook.getIsbn());
         oldBook.setDescription(editedBook.getDescription());
         oldBook.setGenres(genreRepository.findByIds(GenreModelMapper.mapViewListToIds(editedBook.getGenres())));
         oldBook.setAuthors(authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(editedBook.getAuthors())));
+        if (wasBookdataChangedAfterUpdating(editedBook)) {
+            oldBook = mapBookDataToByteArray(oldBook, editedBook);
+        }
         return oldBook;
     }
 
@@ -142,9 +151,14 @@ public class BookServiceImpl implements BookService {
         Book newBook = BookModelMapper.mapFromView(bookViewModel);
         newBook.getGenres().addAll(genres);
         newBook.getAuthors().addAll(authors);
-        byte [] array = IOUtils.toByteArray(bookViewModel.getBookDataPart().getInputStream());
-        newBook.setBookData(array);
+        newBook = mapBookDataToByteArray(newBook, bookViewModel);
         return newBook;
+    }
+
+    private Book mapBookDataToByteArray(Book book, BookViewModel bookViewModel) throws IOException {
+        byte[] array = IOUtils.toByteArray(bookViewModel.getBookDataPart().getInputStream());
+        book.setBookData(array);
+        return book;
     }
 
     private Book loadBookFromViewModel(BookViewModel bookViewModel) throws NotExistsException {

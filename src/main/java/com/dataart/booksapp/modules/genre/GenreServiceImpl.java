@@ -36,38 +36,48 @@ public class GenreServiceImpl implements GenreService {
     }
 
     @Override
-    public long getCount(){
+    public long getCount() {
         return genreRepository.getCount();
     }
 
     @Override
-    public List<GenreViewModel> getInRange(int first,int quantity){
-        return GenreModelMapper.mapFromDomainList(genreRepository.getInRange(first,quantity));
+    public List<GenreViewModel> getInRange(int first, int quantity) {
+        return GenreModelMapper.mapFromDomainList(genreRepository.getInRange(first, quantity));
     }
 
     @Override
-    public void editGenre(GenreViewModel editedGenreViewModel) throws NotExistsException{
-        Preconditions.throwNotExistsIfNull(editedGenreViewModel);
-        Genre oldGenre = genreRepository.findById(editedGenreViewModel.getIdGenre());
-        Preconditions.throwNotExistsIfNull(oldGenre);
-        if(!oldGenre.getName().equals(editedGenreViewModel.getName())){
+    public void editGenre(GenreViewModel editedGenreViewModel) throws NotExistsException {
+        Genre oldGenre = loadGenreFromViewModel(editedGenreViewModel);
+        if (canEditGenre(oldGenre, editedGenreViewModel)) {
             oldGenre.setName(editedGenreViewModel.getName());
             genreRepository.editGenre(oldGenre);
         }
     }
 
     @Override
-    public void addGenre(GenreViewModel addingGenreModel){
-        genreRepository.addGenre(GenreModelMapper.mapFromView(addingGenreModel));
+    public void addGenre(GenreViewModel addingGenreModel) {
+        if (!genreRepository.doesExistsWithName(addingGenreModel.getName())) {
+            genreRepository.addGenre(GenreModelMapper.mapFromView(addingGenreModel));
+        }
     }
 
     @Override
-    public void remove(GenreViewModel removingGenreModel) throws NotExistsException{
+    public void remove(GenreViewModel removingGenreModel) throws NotExistsException {
         Genre removingGenre = loadGenreFromViewModel(removingGenreModel);
         genreRepository.removeGenre(removingGenre);
     }
 
-    private Genre loadGenreFromViewModel(GenreViewModel genreViewModel) throws NotExistsException{
-        return GeneralMapper.loadModelFromViewModel(genreViewModel,GenreViewModel::getIdGenre,genreRepository::findById);
+    private boolean canEditGenre(Genre genre, GenreViewModel genreViewModel) {
+        return !genre.getName().equals(genreViewModel.getName()) && !genreRepository.doesExistsWithName(genreViewModel.getName());
+    }
+
+    public boolean canEditGenre(GenreViewModel genreViewModel) throws NotExistsException{
+        Genre genre = loadGenreFromViewModel(genreViewModel);
+        return canEditGenre(genre,genreViewModel);
+    }
+
+
+    private Genre loadGenreFromViewModel(GenreViewModel genreViewModel) throws NotExistsException {
+        return GeneralMapper.loadModelFromViewModel(genreViewModel, GenreViewModel::getIdGenre, genreRepository::findById);
     }
 }

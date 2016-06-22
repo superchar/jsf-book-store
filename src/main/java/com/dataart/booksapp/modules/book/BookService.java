@@ -16,7 +16,7 @@ public interface BookService {
 
     void addNew(BookViewModel bookViewModel,UserViewModel currentUserViewModel) throws NotExistsException,IOException;
 
-    void edit(BookViewModel bookViewModel) throws NotExistsException;
+    BookViewModel edit(BookViewModel bookViewModel) throws NotExistsException,IOException;
 
     void remove(BookViewModel bookViewModel, UserViewModel currentUser) throws NotExistsException;
 

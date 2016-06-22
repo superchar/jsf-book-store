@@ -11,11 +11,13 @@
         <h:form>
             <h:panelGroup layout="block" styleClass="form-group">
                 <h:outputLabel for="firstName" value="First name"/>
-                <h:inputText styleClass="form-control" value="#{authorData.currentSelectedAuthor.firstName}" id="firstName"/>
+                <h:message for="firstName" errorClass="error message"/>
+                <h:inputText styleClass="form-control" required="true" value="#{authorData.currentSelectedAuthor.firstName}" id="firstName"/>
             </h:panelGroup>
             <h:panelGroup layout="block" styleClass="form-group">
                 <h:outputLabel for="lastName" value="Last name"/>
-                <h:inputText styleClass="form-control" value="#{authorData.currentSelectedAuthor.lastName}" id="lastName"/>
+                <h:message for="lastName" errorClass="error message"/>
+                <h:inputText styleClass="form-control" required="true" value="#{authorData.currentSelectedAuthor.lastName}" id="lastName"/>
             </h:panelGroup>
             <h:panelGroup layout="block" styleClass="form-group">
                 <h:outputLabel for="authorInfo" value="Author info"/>

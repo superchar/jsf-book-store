@@ -23,13 +23,11 @@
                      selectionMode="single" selection="#{genreData.currentSelectedGenre}"
                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                      lazy="true">
-            <p:ajax event="rowSelect" listener="#{genreData.currentSelectedGenre.name}" update=":form:test" />
-            <p:ajax event="rowUnselect"/>
+            <p:ajax event="rowSelect" />
             <p:column headerText="Name">
                 <h:outputLabel value="#{genre.name}"/>
             </p:column>
         </p:dataTable>
-            <h:outputLabel id="test" value="#{genreData.currentSelectedGenre.name}"/>
         </h:form>
         </h:panelGroup>
     </ui:define>
