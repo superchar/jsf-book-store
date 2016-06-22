@@ -142,7 +142,8 @@ public class BookServiceImpl implements BookService {
         Book newBook = BookModelMapper.mapFromView(bookViewModel);
         newBook.getGenres().addAll(genres);
         newBook.getAuthors().addAll(authors);
-        newBook.setBookData(IOUtils.toByteArray(bookViewModel.getBookDataPart().getInputStream()));
+        byte [] array = IOUtils.toByteArray(bookViewModel.getBookDataPart().getInputStream());
+        newBook.setBookData(array);
         return newBook;
     }
 

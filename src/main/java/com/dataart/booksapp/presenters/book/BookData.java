@@ -21,6 +21,8 @@ public class BookData implements Serializable {
 
     private BookViewModel currentSelectedBook = new BookViewModel();
 
+    private int readingFontSize = 15;
+
     private BookViewModel currentSelectedForDeletingBook = new BookViewModel();
 
     public BookViewModel getCurrentSelectedBook() {
@@ -37,5 +39,13 @@ public class BookData implements Serializable {
 
     public void setCurrentSelectedForDeletingBook(BookViewModel currentSelectedForDeletingBook) {
         this.currentSelectedForDeletingBook = currentSelectedForDeletingBook;
+    }
+
+    public int getReadingFontSize() {
+        return readingFontSize;
+    }
+
+    public void setReadingFontSize(int readingFontSize) {
+        this.readingFontSize = readingFontSize;
     }
 }

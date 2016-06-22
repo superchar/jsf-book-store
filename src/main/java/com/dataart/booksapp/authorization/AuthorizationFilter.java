@@ -37,6 +37,7 @@ public class AuthorizationFilter implements Filter {
     }
 
     private boolean isLoginRequest(ServletRequest request){
+        boolean eq = ((HttpServletRequest)request).getServletPath().equals(loginUrl);
         return ((HttpServletRequest)request).getServletPath().equals(loginUrl);
     }
 
