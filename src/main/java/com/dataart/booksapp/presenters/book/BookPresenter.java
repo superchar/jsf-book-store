@@ -60,10 +60,14 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
 
     public Routes processBookEditing(){
         try{
-            bookService.edit(bookData.getCurrentSelectedBook());
+            bookData.setCurrentSelectedBook(bookService.edit(bookData.getCurrentSelectedBook()));
         }
         catch (NotExistsException ex){
-            createGlobalMessage(ex.getMessage());
+            createGlobalMessage("Editing book does not exist");
+            return null;
+        }
+        catch (IOException ex){
+            createGlobalMessage("Error during loading book data");
             return null;
         }
         return router.moveToBooksList();

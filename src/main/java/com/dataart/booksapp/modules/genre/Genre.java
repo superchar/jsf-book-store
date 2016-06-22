@@ -14,7 +14,8 @@ import java.util.List;
         @NamedQuery(name = "genre.findByPrefix",query = "select g from Genre as g where g.name like :namePrefix"),
         @NamedQuery(name = "genre.findByIds",query = "select g from Genre as g where g.idGenre in :genresIds"),
         @NamedQuery(name = "genre.findAll",query = "select g from Genre as g"),
-        @NamedQuery(name = "genre.getCount",query = "select count(g) from Genre as g")
+        @NamedQuery(name = "genre.getCount",query = "select count(g) from Genre as g"),
+        @NamedQuery(name = "genre.getCountForName",query = "select count(g) from Genre as g where g.name=:name")
 })
 public class Genre {
     @Id

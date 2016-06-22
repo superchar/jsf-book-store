@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://java.sun.com/jsf/composite"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+<cc:interface>
+    <cc:attribute name="validationEnabled"/>
+    <cc:attribute name="submitingLabel"/>
+    <cc:attribute name="submitingAction" method-signature="void method()"/>
+    <cc:attribute name="genreTitle"/>
+</cc:interface>
+<cc:implementation>
+    <ui:decorate template="/templates/creationpanel.xhtml">
+        <ui:define name="title">
+            <h:outputLabel value="#{cc.attrs.genreTitle}"/>
+        </ui:define>
+        <ui:define name="panel-body">
+            <h:form>
+                <h:panelGroup layout="block" styleClass="form-group">
+                    <h:outputLabel for="name" value="Name:"/>
+                    <h:message for="name" errorClass="error message"/>
+                    <h:inputText value="#{genreData.currentSelectedGenre.name}" required="true" id="name" styleClass="form-control">
+                        <c:if test="#{cc.attrs.validationEnabled}">
+                            <f:validator validatorId="genreValidator"/>
+                        </c:if>
+                    </h:inputText>
+                    <h:commandButton styleClass="btn btn-success" value="#{cc.attrs.submitingLabel}" action="#{cc.attrs.submitingAction}"/>
+                </h:panelGroup>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</cc:implementation>
+</html>

@@ -4,9 +4,23 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
 
-<h:panelGroup layout="block">
-    #{bookData.currentSelectedBook.bookDataText}
-</h:panelGroup>
+<ui:decorate template="/templates/general.xhtml">
+    <ui:define name="content">
+        <h:panelGroup styleClass="col-md-2">
+            <h:form>
+            <h:inputHidden id="book-font-size" value="#{bookData.readingFontSize}"/>
+            <h:outputLabel id="book-font-size-text" value="Font size: #{bookData.readingFontSize}"/>
+                <p:slider minValue="8" maxValue="30" for="book-font-size" display="book-font-size-text" displayTemplate="Font size: {value}">
+                    <p:ajax event="slideEnd" update=":page" process="book-font-size"/>
+                </p:slider>
+            </h:form>
+        </h:panelGroup>
+        <h:panelGroup layout="block" id="page" styleClass="book-page col-md-8">
+            <h:outputLabel style="font-size: #{bookData.readingFontSize}px" value="#{bookData.currentSelectedBook.bookDataText}"/>
+        </h:panelGroup>
+    </ui:define>
+</ui:decorate>
 </html>

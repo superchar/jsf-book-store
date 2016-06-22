@@ -4,7 +4,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:p="http://primefaces.org/ui"
       xmlns:com="http://java.sun.com/jsf/composite/custom-components">
 
 
@@ -22,7 +21,7 @@
             </ui:decorate>
         </h:panelGroup>
         <h:panelGroup layout="block" styleClass="col-md-8">
-            <com:booklist lazyDataModel="#{bookLazyDataModel}"/>
+            <com:booklist selection="#{bookData.currentSelectedBook}" lazyDataModel="#{bookLazyDataModel}"/>
         </h:panelGroup>
     </ui:define>
 </ui:decorate>

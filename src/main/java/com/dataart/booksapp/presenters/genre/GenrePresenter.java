@@ -33,7 +33,6 @@ public class GenrePresenter extends AbstractPresenter implements Serializable {
     private GenreService genreService;
 
     public Routes addGenre(){
-        GenreViewModel genreViewModel = genreData.getCurrentSelectedGenre();
         genreService.addGenre(genreData.getCurrentSelectedGenre());
         return router.moveToGenresList();
     }

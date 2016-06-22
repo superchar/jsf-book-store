@@ -3,6 +3,7 @@ package com.dataart.booksapp.modules.genre;
 import javax.annotation.ManagedBean;
 import javax.enterprise.context.ApplicationScoped;
 import javax.persistence.EntityManager;
+import javax.persistence.Lob;
 import javax.persistence.PersistenceContext;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -34,6 +35,12 @@ public class GenreRepository {
                 .getSingleResult();
     }
 
+    public boolean doesExistsWithName(String name){
+        return entityManager.createNamedQuery("genre.getCountForName",Long.class)
+                .setParameter("name",name)
+                .getSingleResult() > 0;
+    }
+
     public List<Genre> getInRange(int first,int quantity){
         return entityManager.createNamedQuery("genre.findAll",Genre.class)
                 .setFirstResult(first)
@@ -58,4 +65,5 @@ public class GenreRepository {
         entityManager.remove(genre);
         return genre;
     }
+
 }
