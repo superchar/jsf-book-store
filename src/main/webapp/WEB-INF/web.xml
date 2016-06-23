@@ -10,7 +10,7 @@
 
   <filter>
     <filter-name>login</filter-name>
-    <filter-class>com.dataart.booksapp.authorization.AuthorizationFilter</filter-class>
+    <filter-class>com.dataart.booksapp.ui.user.authorization.AuthorizationFilter</filter-class>
     <init-param>
       <param-name>loginUrl</param-name>
       <param-value>/pages/user/authorization.jsf</param-value>

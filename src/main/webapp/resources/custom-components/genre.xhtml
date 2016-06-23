@@ -8,27 +8,25 @@
       xmlns:cc="http://java.sun.com/jsf/composite"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 <cc:interface>
-    <cc:attribute name="validationEnabled"/>
     <cc:attribute name="submitingLabel"/>
     <cc:attribute name="submitingAction" method-signature="void method()"/>
     <cc:attribute name="genreTitle"/>
+    <cc:attribute name="model"/>
 </cc:interface>
 <cc:implementation>
+    <h:messages styleClass="messages" infoClass="information-message message" globalOnly="true"/>
     <ui:decorate template="/templates/creationpanel.xhtml">
-        <ui:define name="title">
-            <h:outputLabel value="#{cc.attrs.genreTitle}"/>
-        </ui:define>
+        <ui:define name="title">#{cc.attrs.genreTitle}</ui:define>
         <ui:define name="panel-body">
             <h:form>
                 <h:panelGroup layout="block" styleClass="form-group">
                     <h:outputLabel for="name" value="Name:"/>
                     <h:message for="name" errorClass="error message"/>
-                    <h:inputText value="#{genreData.currentSelectedGenre.name}" required="true" id="name" styleClass="form-control">
-                        <c:if test="#{cc.attrs.validationEnabled}">
-                            <f:validator validatorId="genreValidator"/>
-                        </c:if>
+                    <h:inputText value="#{cc.attrs.model.currentEntity.name}" required="true" id="name" styleClass="form-control">
                     </h:inputText>
-                    <h:commandButton styleClass="btn btn-success" value="#{cc.attrs.submitingLabel}" action="#{cc.attrs.submitingAction}"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="form-group">
+                    <h:commandButton styleClass="btn btn-info" value="#{cc.attrs.submitingLabel}" action="#{cc.attrs.submitingAction}"/>
                 </h:panelGroup>
             </h:form>
         </ui:define>

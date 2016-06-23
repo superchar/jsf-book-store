@@ -12,7 +12,7 @@
             <h:panelGroup layout="block" styleClass="form-group">
                 <h:outputLabel for="name" value="Name:"/>
                 <h:message for="name" errorClass="error message"/>
-                <h:inputText value="#{genreData.currentSelectedGenre.name}" required="true" id="name" styleClass="form-control">
+                <h:inputText value="#{genreSessionData.currentSelectedGenre.name}" required="true" id="name" styleClass="form-control">
                     <f:validator validatorId="genreValidator"/>
                 </h:inputText>
             </h:panelGroup>

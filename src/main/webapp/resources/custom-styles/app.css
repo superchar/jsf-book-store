@@ -48,7 +48,7 @@ a.disabled {
     color: white;
     margin-right: 8px;
 }
-.panel-default > .creation-panel-header{
+.panel-default > .panel-heading.creation-panel-header{
     background-color: black;
     font-size: 20px;
     color: white;

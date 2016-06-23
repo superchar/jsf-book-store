@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:cc="http://java.sun.com/jsf/composite">
+<cc:interface>
+    <cc:attribute name="model"/>
+    <cc:attribute name="submitingLabel"/>
+    <cc:attribute name="submitingAction" method-signature="void method()"/>
+    <cc:attribute name="title"/>
+</cc:interface>
+<cc:implementation>
+    <ui:decorate template="/templates/creationpanel.xhtml">
+        <ui:define name="title">#{cc.attrs.title}</ui:define>
+        <ui:define name="panel-body">
+            <h:form>
+                <h:panelGroup layout="block" styleClass="form-group">
+                    <h:outputLabel for="firstName" value="First name"/>
+                    <h:message for="firstName" errorClass="error message"/>
+                    <h:inputText styleClass="form-control" required="true" value="#{cc.attrs.model.currentEntity.firstName}" id="firstName"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="form-group">
+                    <h:outputLabel for="lastName" value="Last name"/>
+                    <h:message for="lastName" errorClass="error message"/>
+                    <h:inputText styleClass="form-control" required="true" value="#{cc.attrs.model.currentEntity.lastName}" id="lastName"/>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="form-group">
+                    <h:outputLabel for="authorInfo" value="Author info"/>
+                    <h:inputTextarea styleClass="form-control" value="#{cc.attrs.model.currentEntity.authorInfo}" id="authorInfo"/>
+                </h:panelGroup>
+                <h:commandButton value="#{cc.attrs.submitingLabel}" styleClass="btn btn-info" action="#{cc.attrs.submitingAction}"/>
+            </h:form>
+        </ui:define>
+    </ui:decorate>
+</cc:implementation>
+</html>

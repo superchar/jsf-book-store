@@ -18,14 +18,14 @@
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="email" value="Email:"/>
                             <h:message for="email" errorClass="error message"/>
-                            <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.currentUser.email}">
+                            <h:inputText required="true" styleClass="form-control" id="email" value="#{userSessionData.currentUser.email}">
                                 <f:validator validatorId="emailValidator"/>
                             </h:inputText>
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="password" value="Password:"/>
                             <h:message for="password" errorClass="error message"/>
-                            <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.currentUser.password}">
+                            <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userSessionData.currentUser.password}">
                                 <f:validateLength minimum="8"/>
                                 <f:validator validatorId="passwordValidator"/>
                             </h:inputSecret>
@@ -33,12 +33,12 @@
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="firstName" value="First name:"/>
                             <h:message for="firstName" errorClass="error message"/>
-                            <h:inputText id="firstName" required="true" value="#{userData.currentUser.firstName}" styleClass="form-control"/>
+                            <h:inputText id="firstName" required="true" value="#{userSessionData.currentUser.firstName}" styleClass="form-control"/>
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group">
                             <h:outputLabel for="lastName" value="Last name:"/>
                             <h:message for="lastName" errorClass="error message"/>
-                            <h:inputText id="lastName" value="#{userData.currentUser.lastName}" styleClass="form-control"/>
+                            <h:inputText id="lastName" required="true" value="#{userSessionData.currentUser.lastName}" styleClass="form-control"/>
                         </h:panelGroup>
                         <h:panelGroup layout="block" styleClass="form-group"><h:commandButton styleClass="btn btn-info" value="Create new user" action="#{userPresenter.passRegistration}"/></h:panelGroup>
                     </ui:define>

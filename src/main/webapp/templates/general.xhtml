@@ -22,10 +22,16 @@
             <li><h:link value="Books" outcome="#{router.moveToBooksList()}"/></li>
             <li><h:link value="Authors" outcome="#{router.moveToAuthorsList()}"/></li>
             <li><h:link value="Genres" outcome="#{router.moveToGenresList()}"/></li>
-            <li><h:link value="My profile" rendered="#{userData.authenticated}" outcome="#{router.moveToMyProfile()}"/><h:link rendered="#{!userData.authenticated}" outcome="#{router.moveToRegistration()}" value="Registration"/></li>
+            <h:panelGroup layout="block" rendered="#{userSessionData.authenticated}">
+                <li><h:link value="My profile" outcome="#{router.moveToMyProfile()}"/></li>
+            </h:panelGroup>
+            <h:panelGroup rendered="#{!userSessionData.authenticated}" layout="block">
+                <li><h:link outcome="#{router.moveToRegistration()}" value="Registration"/></li>
+                <li><h:link outcome="#{router.moveToAuthentication()}" value="Login"/></li>
+            </h:panelGroup>
         </ul>
-        <h:form rendered="#{userData.authenticated}" styleClass="pull-right login-form">
-            <h:outputLabel styleClass="email" value="#{userData.currentUser.email}"/>
+        <h:form rendered="#{userSessionData.authenticated}" styleClass="pull-right login-form">
+            <h:outputLabel styleClass="email" value="#{userSessionData.currentUser.email}"/>
             <h:commandButton value="Logout" styleClass="btn btn-danger" action="#{userPresenter.logout}"/>
         </h:form>
     </h:panelGroup>

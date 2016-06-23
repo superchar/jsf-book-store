@@ -15,7 +15,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>genresList</from-outcome>
-            <to-view-id>/pages/genres/list.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/genre/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>addingBook</from-outcome>
@@ -27,11 +27,11 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>editingGenre</from-outcome>
-            <to-view-id>/pages/genres/editing.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/genre/editing.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>addingGenre</from-outcome>
-            <to-view-id>/pages/genres/adding.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/genre/adding.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>editingAuthor</from-outcome>
@@ -47,11 +47,11 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>profile</from-outcome>
-            <to-view-id>/pages/user/favorite_books/list.xhtml</to-view-id>
+            <to-view-id>/pages/user/profile/list.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>authentication</from-outcome>
-            <to-view-id>/pages/user/authorization.xhtml</to-view-id>
+            <to-view-id>/pages/user/authorization.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
     </navigation-rule>
 </faces-config>

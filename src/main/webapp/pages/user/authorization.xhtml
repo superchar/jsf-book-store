@@ -18,14 +18,14 @@
                                 <h:panelGroup layout="block" styleClass="form-group">
                                     <h:outputLabel for="email" value="Email:"/>
                                     <h:message for="email" errorClass="error message"/>
-                                    <h:inputText required="true" styleClass="form-control" id="email" value="#{userData.currentUser.email}">
+                                    <h:inputText required="true" styleClass="form-control" id="email" value="#{userSessionData.currentUser.email}">
                                         <f:validator validatorId="emailValidator"/>
                                     </h:inputText>
                                 </h:panelGroup>
                                 <h:panelGroup layout="block" styleClass="form-group">
                                     <h:outputLabel for="password" value="Password:"/>
                                     <h:message for="password" errorClass="error message"/>
-                                    <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userData.currentUser.password}">
+                                    <h:inputSecret styleClass="form-control" id="password" required="true" value="#{userSessionData.currentUser.password}">
                                         <f:validateLength minimum="8"/>
                                         <f:validator validatorId="passwordValidator"/>
                                     </h:inputSecret>
