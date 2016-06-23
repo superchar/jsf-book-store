@@ -2,13 +2,22 @@ package com.dataart.booksapp.domain.author;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vlobyntsev on 02.06.2016.
  */
 public class AuthorModelMapper {
 
-    public static AuthorViewModel mapFromDomain(Author author){
+    public static List<Integer> mapViewListToIds(List<AuthorViewModel> authorViewModels){
+        return authorViewModels.stream().map(AuthorViewModel::getAuthorId).collect(Collectors.toList());
+    }
+
+    public static List<AuthorViewModel> mapFromDomainModelList(List<Author> domainModelList){
+        return domainModelList.stream().map(AuthorModelMapper::mapFromDomain).collect(Collectors.toList());
+    }
+
+    static AuthorViewModel mapFromDomain(Author author){
         AuthorViewModel authorViewModel = new AuthorViewModel();
         authorViewModel.setAuthorId(author.getIdAuthor());
         authorViewModel.setFirstName(author.getFirstName());
@@ -17,30 +26,14 @@ public class AuthorModelMapper {
         return authorViewModel;
     }
 
-    public static Author updateAuthorAccordingViewModel(Author author,AuthorViewModel authorViewModel){
+    static Author updateAuthorAccordingViewModel(Author author,AuthorViewModel authorViewModel){
         author.setFirstName(authorViewModel.getFirstName());
         author.setLastName(authorViewModel.getLastName());
         author.setAuthorInfo(authorViewModel.getAuthorInfo());
         return author;
     }
 
-    public static List<Integer> mapViewListToIds(List<AuthorViewModel> authorViewModels){
-        List<Integer> authorsIds = new ArrayList<>();
-        for(AuthorViewModel authorViewModel: authorViewModels){
-            authorsIds.add(authorViewModel.getAuthorId());
-        }
-        return authorsIds;
-    }
-
-    public static List<AuthorViewModel> mapFromDomainModelList(List<Author> domainModelList){
-        List<AuthorViewModel> mappedList = new ArrayList<>();
-        for(Author author : domainModelList){
-            mappedList.add(mapFromDomain(author));
-        }
-        return mappedList;
-    }
-
-    public static Author mapFromView(AuthorViewModel authorViewModel){
+    static Author mapFromView(AuthorViewModel authorViewModel){
         Author author = new Author();
         author.setIdAuthor(author.getIdAuthor());
         author.setFirstName(authorViewModel.getFirstName());

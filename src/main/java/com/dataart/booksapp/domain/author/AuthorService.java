@@ -15,13 +15,12 @@ public interface AuthorService {
 
     AuthorViewModel findById(int id);
 
-    List<AuthorViewModel> getAuthorsInRange(int from,int quantity);
+    List<AuthorViewModel> getInRange(int from, int quantity);
 
     long getCount();
 
-    void addAuthor(AuthorViewModel addedAuthorModel);
+    void add(AuthorViewModel addedAuthorModel);
 
-    void editAuthor(AuthorViewModel authorViewModel) throws NotExistsException;
+    void edit(AuthorViewModel authorViewModel) throws NotExistsException;
 
-    void delete(AuthorViewModel authorViewModel) throws NotExistsException;
 }

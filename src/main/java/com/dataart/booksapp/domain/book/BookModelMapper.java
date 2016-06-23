@@ -5,13 +5,18 @@ import com.dataart.booksapp.domain.genre.GenreModelMapper;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by vlobyntsev on 03.06.2016.
  */
 public class BookModelMapper {
 
-    public static Book mapFromView(BookViewModel bookViewModel) {
+    public static List<BookViewModel> mapFromDomainList(List<Book> books) {
+       return books.stream().map(BookModelMapper::mapFromDomain).collect(Collectors.toList());
+    }
+
+    static Book mapFromView(BookViewModel bookViewModel) {
         Book book = new Book();
         book.setIdBook(bookViewModel.getIdBook());
         book.setDescription(bookViewModel.getDescription());
@@ -20,7 +25,7 @@ public class BookModelMapper {
         return book;
     }
 
-    public static BookViewModel mapFromDomain(Book book) {
+    static BookViewModel mapFromDomain(Book book) {
         BookViewModel bookViewModel = new BookViewModel();
         bookViewModel.setIdBook(book.getIdBook());
         bookViewModel.setDescription(book.getDescription());
@@ -30,13 +35,5 @@ public class BookModelMapper {
         bookViewModel.setGenres(GenreModelMapper.mapFromDomainList(book.getGenres()));
         bookViewModel.setBookDataText(new String(book.getBookData()));
         return bookViewModel;
-    }
-
-    public static List<BookViewModel> mapFromDomainList(List<Book> books) {
-        List<BookViewModel> mappedList = new ArrayList<>();
-        for (Book book : books) {
-            mappedList.add(mapFromDomain(book));
-        }
-        return mappedList;
     }
 }

@@ -18,22 +18,8 @@ public class BookRepository {
     @PersistenceContext(unitName = "books")
     private EntityManager entityManager;
 
-    public Book addNewBook(Book book) {
-        entityManager.persist(book);
-        return book;
-    }
-
     public Book findById(int id){
         return entityManager.find(Book.class,id);
-    }
-
-    public Book editBook(Book book){
-        return entityManager.merge(book);
-    }
-
-    public long getBooksCount(){
-        return entityManager.createNamedQuery("book.count",Long.class)
-                .getSingleResult();
     }
 
     public Book remove(Book book){
@@ -41,14 +27,28 @@ public class BookRepository {
         return book;
     }
 
-    public List<Book> getBooksInRange(int from, int resultsQuantity) {
+    Book add(Book book) {
+        entityManager.persist(book);
+        return book;
+    }
+
+    Book edit(Book book){
+        return entityManager.merge(book);
+    }
+
+    long getCount(){
+        return entityManager.createNamedQuery("book.count",Long.class)
+                .getSingleResult();
+    }
+
+    List<Book> getInRange(int from, int resultsQuantity) {
         return entityManager.createNamedQuery("book.findAll", Book.class)
                 .setFirstResult(from)
                 .setMaxResults(resultsQuantity)
                 .getResultList();
     }
 
-    public List<Book> findByCreator(int first,int quantity,User creator){
+    List<Book> findByCreator(int first,int quantity,User creator){
         return entityManager.createNamedQuery("book.findByCreator",Book.class)
                 .setParameter("creatorId",creator.getIdUser())
                 .setFirstResult(first)
@@ -56,7 +56,7 @@ public class BookRepository {
                 .getResultList();
     }
 
-    public long getCountByCreator(User creator){
+    long getCountByCreator(User creator){
         return entityManager.createNamedQuery("book.getCountByCreator",Long.class)
                 .setParameter("creatorId",creator.getIdUser())
                 .getSingleResult();

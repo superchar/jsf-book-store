@@ -7,6 +7,7 @@ import com.dataart.booksapp.domain.author.AuthorViewModel;
 import com.dataart.booksapp.domain.general.GeneralMapper;
 import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 import com.dataart.booksapp.domain.general.Preconditions;
+import com.dataart.booksapp.domain.general.exceptions.PermissionDeniedException;
 import com.dataart.booksapp.domain.genre.*;
 import com.dataart.booksapp.domain.user.User;
 import com.dataart.booksapp.domain.user.UserModelMapper;
@@ -39,41 +40,44 @@ public class BookServiceImpl implements BookService {
     @Inject
     private UserRepository userRepository;
 
-    public List<BookViewModel> getBooksInRange(int from, int resultsQuantity) {
-        return BookModelMapper.mapFromDomainList(bookRepository.getBooksInRange(from, resultsQuantity));
+    public List<BookViewModel> getInRange(int from, int resultsQuantity) {
+        return BookModelMapper.mapFromDomainList(bookRepository.getInRange(from, resultsQuantity));
     }
 
     @Override
-    public void addNew(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws NotExistsException, IOException {
+    public void add(BookViewModel bookViewModel, UserViewModel currentUserViewModel)throws IOException {
+        throwIllegalArgumentIfBookOrUserIsNull(bookViewModel,currentUserViewModel);
         List<Genre> genres = genreRepository.findByIds(GenreModelMapper.mapViewListToIds(bookViewModel.getGenres()));
-        Preconditions.throwNotExistsIfEmpty(genres);
+        Preconditions.throwEmptyCollectionIfEmpty(genres,"Genres list is empty");
         List<Author> authors = authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(bookViewModel.getAuthors()));
-        Preconditions.throwNotExistsIfEmpty(authors);
+        Preconditions.throwEmptyCollectionIfEmpty(authors,"Authors list is empty");
         User currentUser = loadUserFromViewModel(currentUserViewModel);
         Book newBook = buildNewBook(bookViewModel, genres, authors);
         newBook.setCreator(currentUser);
-        bookRepository.addNewBook(newBook);
+        bookRepository.add(newBook);
     }
 
     @Override
-    public void remove(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws NotExistsException {
+    public void remove(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws PermissionDeniedException {
+        throwIllegalArgumentIfBookOrUserIsNull(bookViewModel,currentUserViewModel);
         User currentUser = loadUserFromViewModel(currentUserViewModel);
         Book removingBook = loadBookFromViewModel(bookViewModel);
-        if (removingBook.getCreator().getIdUser() == currentUser.getIdUser()) {
-            bookRepository.remove(removingBook);
+        if (removingBook.getCreator().getIdUser() != currentUser.getIdUser()) {
+            throw new PermissionDeniedException("User cant delete book not created by him");
         }
+        bookRepository.remove(removingBook);
     }
 
-    public long getBooksCount() {
-        return bookRepository.getBooksCount();
+    public long getCount() {
+        return bookRepository.getCount();
     }
 
     @Override
-    public BookViewModel edit(BookViewModel bookViewModel) throws NotExistsException, IOException {
+    public BookViewModel edit(BookViewModel bookViewModel) throws IOException {
         Book editingBook = loadBookFromViewModel(bookViewModel);
         if (wasBookChangedAfterUpdating(editingBook, bookViewModel)) {
             editingBook = updateBook(editingBook, bookViewModel);
-            bookRepository.editBook(editingBook);
+            bookRepository.edit(editingBook);
         }
         return BookModelMapper.mapFromDomain(editingBook);
     }
@@ -84,7 +88,7 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-    public List<BookViewModel> findBooksByCreator(int first, int quantity, UserViewModel creatorViewModel) {
+    public List<BookViewModel> findByCreator(int first, int quantity, UserViewModel creatorViewModel) {
         return BookModelMapper.mapFromDomainList(bookRepository.findByCreator(first, quantity, UserModelMapper.mapFromView(creatorViewModel)));
     }
 
@@ -140,7 +144,7 @@ public class BookServiceImpl implements BookService {
         oldBook.setGenres(genreRepository.findByIds(GenreModelMapper.mapViewListToIds(editedBook.getGenres())));
         oldBook.setAuthors(authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(editedBook.getAuthors())));
         if (wasBookdataChangedAfterUpdating(editedBook)) {
-            oldBook = mapBookDataToByteArray(oldBook, editedBook);
+            oldBook = mapBookDataPartToByteArray(oldBook, editedBook);
         }
         return oldBook;
     }
@@ -149,11 +153,11 @@ public class BookServiceImpl implements BookService {
         Book newBook = BookModelMapper.mapFromView(bookViewModel);
         newBook.getGenres().addAll(genres);
         newBook.getAuthors().addAll(authors);
-        newBook = mapBookDataToByteArray(newBook, bookViewModel);
+        newBook = mapBookDataPartToByteArray(newBook, bookViewModel);
         return newBook;
     }
 
-    private Book mapBookDataToByteArray(Book book, BookViewModel bookViewModel) throws IOException {
+    private Book mapBookDataPartToByteArray(Book book, BookViewModel bookViewModel) throws IOException {
         byte[] array = IOUtils.toByteArray(bookViewModel.getBookDataPart().getInputStream());
         book.setBookData(array);
         return book;
@@ -165,5 +169,10 @@ public class BookServiceImpl implements BookService {
 
     private User loadUserFromViewModel(UserViewModel userViewModel) throws NotExistsException {
         return GeneralMapper.loadModelFromViewModel(userViewModel, UserViewModel::getIdUser, userRepository::findById);
+    }
+
+    private void throwIllegalArgumentIfBookOrUserIsNull(BookViewModel bookViewModel,UserViewModel userViewModel){
+        Preconditions.throwIllegalArgumentIfParamIsNull(bookViewModel,"bookViewModel");//.Net nameof would be suitable here..
+        Preconditions.throwIllegalArgumentIfParamIsNull(userViewModel,"userViewModel");
     }
 }

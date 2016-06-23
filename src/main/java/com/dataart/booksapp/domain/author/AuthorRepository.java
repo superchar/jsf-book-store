@@ -20,24 +20,8 @@ public class AuthorRepository extends AbstractRepository {
     @PersistenceContext(unitName = "books")
     private EntityManager entityManager;
 
-    public Author addAuthor(Author author){
-        entityManager.persist(author);
-        return author;
-    }
-
     public Author edit(Author author){
         return entityManager.merge(author);
-    }
-
-    public List<Author> getAuthorsInRange(int from,int quantity){
-        return buildFindAllQuery()
-                .setFirstResult(from)
-                .setMaxResults(quantity)
-                .getResultList();
-    }
-
-    public List<Author> findAll(){
-        return buildFindAllQuery().getResultList();
     }
 
     public long getCount(){
@@ -54,15 +38,22 @@ public class AuthorRepository extends AbstractRepository {
                 .getResultList();
     }
 
-    public List<Author> findByNamePrefix(String namePrefix){
-        return entityManager.createNamedQuery("author.findByNamePrefix",Author.class)
-                .setParameter("namePrefix","%"+namePrefix+"%")
+    Author add(Author author){
+        entityManager.persist(author);
+        return author;
+    }
+
+    List<Author> getInRange(int from, int quantity){
+        return buildFindAllQuery()
+                .setFirstResult(from)
+                .setMaxResults(quantity)
                 .getResultList();
     }
 
-    public Author delete(Author author){
-        entityManager.remove(author);
-        return author;
+    List<Author> findByNamePrefix(String namePrefix){
+        return entityManager.createNamedQuery("author.findByNamePrefix",Author.class)
+                .setParameter("namePrefix","%"+namePrefix+"%")
+                .getResultList();
     }
 
     private TypedQuery<Author> buildFindAllQuery(){

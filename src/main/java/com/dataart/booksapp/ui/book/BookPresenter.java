@@ -97,7 +97,7 @@ public class BookPresenter extends AbstractPresenter implements Serializable {
 
     public Routes processBookAdding() {
         try {
-            bookService.addNew(bookLocalData.getCurrentEntity(), userSessionData.getCurrentUser());
+            bookService.add(bookLocalData.getCurrentEntity(), userSessionData.getCurrentUser());
         } catch (NotExistsException ex) {
             createGlobalMessage(ex.getMessage());
             return null;

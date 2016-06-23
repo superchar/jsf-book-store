@@ -34,7 +34,7 @@ public class CreatedBooksLazyDataModel extends LazyDataModelBase<BookViewModel> 
 
     @Override
     protected List<BookViewModel> getEntitiesFor(int first, int quantity) {
-        return bookService.findBooksByCreator(first,quantity, userSessionData.getCurrentUser());
+        return bookService.findByCreator(first,quantity, userSessionData.getCurrentUser());
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.dataart.booksapp.domain.book;
 
 import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
+import com.dataart.booksapp.domain.general.exceptions.PermissionDeniedException;
 import com.dataart.booksapp.domain.user.UserViewModel;
 
 import javax.ejb.Local;
@@ -13,20 +14,20 @@ import java.util.List;
 @Local
 public interface BookService {
 
-    void addNew(BookViewModel bookViewModel,UserViewModel currentUserViewModel) throws NotExistsException,IOException;
+    void add(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws IOException;
 
     BookViewModel edit(BookViewModel bookViewModel) throws NotExistsException,IOException;
 
-    void remove(BookViewModel bookViewModel, UserViewModel currentUser) throws NotExistsException;
+    void remove(BookViewModel bookViewModel, UserViewModel currentUser) throws PermissionDeniedException;
 
-    List<BookViewModel> getBooksInRange(int from, int resultsQuantity);
+    List<BookViewModel> getInRange(int from, int resultsQuantity);
 
     BookViewModel findById(int id);
 
-    long getBooksCount();
+    long getCount();
 
     long getCountByCreator(UserViewModel creatorViewModel);
 
-    List<BookViewModel> findBooksByCreator(int first,int quantity,UserViewModel creatorViewModel);
+    List<BookViewModel> findByCreator(int first, int quantity, UserViewModel creatorViewModel);
 
 }

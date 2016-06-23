@@ -3,7 +3,7 @@ package com.dataart.booksapp.domain.general.exceptions;
 /**
  * Created by vlobyntsev on 23.06.2016.
  */
-public class ExistsException extends Exception {
+public class ExistsException extends RuntimeException {
 
     private static final String DEFAULT_MESSAGE = "%s with %s %s already exists";
 

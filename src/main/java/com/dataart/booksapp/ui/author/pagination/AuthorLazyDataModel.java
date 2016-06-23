@@ -29,7 +29,7 @@ public class AuthorLazyDataModel extends LazyDataModelBase<AuthorViewModel> impl
 
     @Override
     protected List<AuthorViewModel> getEntitiesFor(int first, int quantity) {
-        return authorService.getAuthorsInRange(first,quantity);
+        return authorService.getInRange(first,quantity);
     }
 
     @Override

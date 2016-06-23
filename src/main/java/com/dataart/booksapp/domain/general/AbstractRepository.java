@@ -8,7 +8,7 @@ import javax.persistence.TypedQuery;
  */
 public abstract class AbstractRepository {
 
-    protected  <T>T processSingleResult(TypedQuery<T> query){
+    protected <T>T processSingleResult(TypedQuery<T> query){
         try{
             return query.getSingleResult();
         }catch (NoResultException ex){

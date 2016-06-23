@@ -24,12 +24,12 @@ public class BookLazyDataModel extends LazyDataModelBase<BookViewModel> implemen
 
     @Override
     protected int getRowsQuantity() {
-        return (int)bookService.getBooksCount();
+        return (int)bookService.getCount();
     }
 
     @Override
     protected List<BookViewModel> getEntitiesFor(int first, int quantity) {
-        return bookService.getBooksInRange(first,quantity);
+        return bookService.getInRange(first,quantity);
     }
 
     @Override
