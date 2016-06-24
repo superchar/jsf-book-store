@@ -6,3 +6,4 @@ Application should be deployed using Glassfish container of 4.1 version and high
 * JSF 2.2
 * EJB 3.2
 * Glassfish 4.1
+* CDI 1.1
