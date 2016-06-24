@@ -21,10 +21,6 @@ public class Router {
         return Routes.editingBook;
     }
 
-    public Routes moveToAuthorization(){
-        return Routes.authentication;
-    }
-
     public Routes moveToRegistration(){
         return Routes.registration;
     }
