@@ -13,7 +13,6 @@ import javax.faces.validator.ValidatorException;
 @FacesValidator("passwordValidator")
 public class PasswordValidator extends AbstractUIInputValidator {
 
-    /*(?=.*)*/
     private static final String PASSWORD_PATTERN = "^(?=.*[A-Z])(?=.*\\d)(?=.*[\\.!@#\\$%\\^&\\*\\(\\)\\-_=\\+]).+$";
 
     public void validate(FacesContext facesContext, UIComponent uiComponent, Object value) throws ValidatorException {

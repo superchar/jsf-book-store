@@ -16,11 +16,11 @@ import java.io.Serializable;
 @Named
 public class BookSessionData extends AbstractDataBean<BookViewModel> implements Serializable {
 
+    private int readingFontSize = 15;
+
     public BookSessionData() {
         super(new BookViewModel());
     }
-
-    private int readingFontSize = 15;
 
     public int getReadingFontSize() {
         return readingFontSize;

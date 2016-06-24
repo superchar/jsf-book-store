@@ -2,6 +2,7 @@ package com.dataart.booksapp.domain.user;
 
 import com.dataart.booksapp.domain.book.Book;
 
+import javax.inject.Named;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +16,8 @@ import java.util.List;
         @NamedQuery(name = "user.findByEmail",query = "select u from User as u where u.email=:email"),
         @NamedQuery(name = "user.isBookInFavoriteList",query = "select count(u) > 0 from User as u join u.books as b where b.idBook=:bookId and u.idUser=:userId"),
         @NamedQuery(name = "user.getFavoriteBooks",query = "select b from User as u join u.books as b where u.idUser=:userId"),
-        @NamedQuery(name = "user.getFavoriteBooksCount",query = "select count(b) from User as u join u.books as b where u.idUser=:userId")
+        @NamedQuery(name = "user.getFavoriteBooksCount",query = "select count(b) from User as u join u.books as b where u.idUser=:userId"),
+        @NamedQuery(name = "user.doesExistWithEmail",query = "select count(u)>0 from User as u where u.email=:email")
 })
 public class User {
 

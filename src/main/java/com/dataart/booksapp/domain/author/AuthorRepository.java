@@ -15,7 +15,7 @@ import java.util.List;
  */
 @ManagedBean
 @ApplicationScoped
-public class AuthorRepository extends AbstractRepository {
+public class AuthorRepository {
 
     @PersistenceContext(unitName = "books")
     private EntityManager entityManager;

@@ -16,9 +16,9 @@ public interface BookService {
 
     void add(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws IOException;
 
-    BookViewModel edit(BookViewModel bookViewModel) throws NotExistsException,IOException;
+    BookViewModel edit(BookViewModel bookViewModel) throws IOException;
 
-    void remove(BookViewModel bookViewModel, UserViewModel currentUser) throws PermissionDeniedException;
+    void remove(BookViewModel bookViewModel, UserViewModel currentUser);
 
     List<BookViewModel> getInRange(int from, int resultsQuantity);
 

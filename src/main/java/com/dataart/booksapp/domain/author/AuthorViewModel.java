@@ -44,4 +44,13 @@ public class AuthorViewModel {
     public void setAuthorInfo(String authorInfo) {
         this.authorInfo = authorInfo;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        if(other instanceof AuthorViewModel){
+            AuthorViewModel otherAuthorViewModel = (AuthorViewModel) other;
+            return this.getAuthorId() == otherAuthorViewModel.getAuthorId();
+        }
+        return false;
+    }
 }

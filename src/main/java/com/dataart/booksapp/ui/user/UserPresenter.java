@@ -1,10 +1,12 @@
 package com.dataart.booksapp.ui.user;
 
-import com.dataart.booksapp.domain.general.exceptions.ExistsException;
+import com.dataart.booksapp.domain.general.exceptions.ExistsWithException;
+import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 import com.dataart.booksapp.domain.user.User;
 import com.dataart.booksapp.domain.user.UserCredentials;
 import com.dataart.booksapp.domain.user.UserService;
-import com.dataart.booksapp.ui.general.AbstractPresenter;
+import com.dataart.booksapp.ui.book.data.BookLocalData;
+import com.dataart.booksapp.ui.general.helpers.MessageHelper;
 import com.dataart.booksapp.ui.general.routing.Router;
 import com.dataart.booksapp.ui.general.routing.Routes;
 
@@ -21,7 +23,7 @@ import java.io.Serializable;
 @ManagedBean
 @SessionScoped
 @Named
-public class UserPresenter extends AbstractPresenter implements Serializable {
+public class UserPresenter implements Serializable {
 
     @EJB
     private UserService userService;
@@ -30,8 +32,10 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
     private Router router;
 
     @Inject
-    private UserSessionData userSessionData;
+    private BookLocalData bookLocalData;
 
+    @Inject
+    private UserSessionData userSessionData;
 
     public Routes login() {
         if (userService.areCredentialsValid(new UserCredentials(userSessionData.getCurrentUser().getEmail(), userSessionData.getCurrentUser().getPassword()))) {
@@ -39,7 +43,7 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
             userSessionData.setAuthenticated(true);
             return Routes.booksList;
         }
-        createGlobalMessage("Login or password is not correct");
+        MessageHelper.createGlobalMessage("Login or password is not correct");
         return null;
     }
 
@@ -50,22 +54,23 @@ public class UserPresenter extends AbstractPresenter implements Serializable {
 
     public Routes passRegistration() {
         try {
-            userService.createNew(buildUserFromUserData());
-        } catch (ExistsException ex) {
-            createGlobalMessage(ex.getMessage());
+            userService.add(userSessionData.getCurrentUser());
+        } catch (ExistsWithException ex) {
+            MessageHelper.createGlobalMessage(ex.getMessage());
             return null;
         }
-        createGlobalMessage("Registration was successful");
+        MessageHelper.createGlobalMessage("Registration was successful");
         return null;
     }
 
-    private User buildUserFromUserData(){
-        User user = new User();
-        user.setEmail(userSessionData.getCurrentUser().getEmail());
-        user.setPassword(userSessionData.getCurrentUser().getPassword());
-        user.setFirstName(userSessionData.getCurrentUser().getFirstName());
-        user.setLastName(userSessionData.getCurrentUser().getLastName());
-        return user;
+    public Routes addToBookFavorites() {
+        try {
+            userService.addBookToFavorites(bookLocalData.getCurrentEntity(), userSessionData.getCurrentUser());
+        } catch (NotExistsException e) {
+            MessageHelper.createGlobalMessage("Adding book to favorite was failed because on not existing of the of the entities");
+            return null;
+        }
+        return router.moveToMyProfile();
     }
 
 

@@ -53,11 +53,14 @@
                             id="author"
                             multiple="true"
                             value="#{cc.attrs.model.currentEntity.authors}"
-                            completeMethod="#{bookPresenter.completeAuthor}"
+                            completeMethod="#{bookAutocompletePresenter.completeAuthor}"
                             converter="#{authorAutocompleteConverter}"
                             var="author"
                             itemValue="#{author}"
-                            itemLabel="#{author.firstName}"/>
+                            itemLabel="#{author.firstName.concat(' ').concat(author.lastName)}">
+                        <p:ajax event="itemSelect"/>
+                        <p:ajax event="itemUnselect"/>
+                    </p:autoComplete>
                 </h:panelGroup>
                 <h:panelGroup layout="block" styleClass="form-group">
                     <h:outputLabel styleClass="block-label" for="genre" value="Genre:"/>
@@ -65,15 +68,13 @@
                     <p:autoComplete
                             required="true"
                             id="genre"
-                            value="#{cc.attrs.model.currentEntity.genres}"
                             multiple="true"
-                            completeMethod="#{bookPresenter.completeGenre}"
-                            var="genre"
+                            value="#{cc.attrs.model.currentEntity.genres}"
+                            completeMethod="#{bookAutocompletePresenter.completeGenre}"
                             converter="#{genreAutocompleteConverter}"
+                            var="genre"
                             itemValue="#{genre}"
                             itemLabel="#{genre.name}">
-                        <p:ajax event="itemSelect" />
-                        <p:ajax event="itemUnselect"/>
                     </p:autoComplete>
                 </h:panelGroup>
                 <h:commandButton styleClass="btn btn-info" value="#{cc.attrs.sumbitingLabel}" action="#{cc.attrs.sumbitingAction}"/>

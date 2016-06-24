@@ -19,11 +19,11 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>addingBook</from-outcome>
-            <to-view-id>/pages/book/addnew.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/book/adding.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>editingBook</from-outcome>
-            <to-view-id>/pages/book/edit.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/book/editing.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>editingGenre</from-outcome>
@@ -47,7 +47,7 @@
         </navigation-case>
         <navigation-case>
             <from-outcome>profile</from-outcome>
-            <to-view-id>/pages/user/profile/list.xhtml?faces-redirect=true</to-view-id>
+            <to-view-id>/pages/user/profile/profile.xhtml?faces-redirect=true</to-view-id>
         </navigation-case>
         <navigation-case>
             <from-outcome>authentication</from-outcome>

@@ -32,6 +32,7 @@ public class Book {
     private String description;
 
     @Lob
+    @Basic(fetch = FetchType.LAZY)
     private byte [] bookData;
 
     @ManyToOne

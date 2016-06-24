@@ -17,6 +17,7 @@ import java.util.List;
 public class AuthorizationFilter implements Filter {
 
     private List<String> unsecuredUrls;
+
     private String loginUrl;
 
     @Inject
@@ -38,6 +39,11 @@ public class AuthorizationFilter implements Filter {
         }
     }
 
+    @Override
+    public void destroy() {
+
+    }
+
     private boolean isUnsecuredRequest(ServletRequest request){
         String targetUrl = ((HttpServletRequest)request).getServletPath();
         return loginUrl.equals(targetUrl) || unsecuredUrls.contains(targetUrl);
@@ -47,8 +53,4 @@ public class AuthorizationFilter implements Filter {
        return httpServletRequest.getRequestURI().startsWith(httpServletRequest.getContextPath() + ResourceHandler.RESOURCE_IDENTIFIER + "/");
     }
 
-    @Override
-    public void destroy() {
-
-    }
 }

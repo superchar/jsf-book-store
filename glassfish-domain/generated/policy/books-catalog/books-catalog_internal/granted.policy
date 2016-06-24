@@ -1,0 +1,40 @@
+/* AUTOMATICALLY GENERATED ON Fri Jun 24 12:22:14 EEST 2016*/
+/* DO NOT EDIT */
+
+grant {
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "findById,Local,int";
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "getCount,Local,";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "getCount,Local,";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "getCountByCreator,Local,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "findById,Local,int";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "edit,Local,com.dataart.booksapp.domain.genre.GenreViewModel";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "findByCreator,Local,int,int,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "getCount,Local,";
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "findByNamePrefix,Local,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "add,Local,com.dataart.booksapp.domain.author.AuthorViewModel";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "add,Local,com.dataart.booksapp.domain.genre.GenreViewModel";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "findById,Local,int";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "getInRange,Local,int,int";
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "edit,Local,com.dataart.booksapp.domain.author.AuthorViewModel";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "getInRange,Local,int,int";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "getFavoriteBooksCount,Local,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "findByEmail,Local,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "AuthorServiceImpl", "getInRange,Local,int,int";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "add,Local,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "findByNamePrefix,Local,java.lang.String";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "add,Local,com.dataart.booksapp.domain.book.BookViewModel,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "remove,Local,com.dataart.booksapp.domain.book.BookViewModel,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "getFavoriteBooks,Local,int,int,com.dataart.booksapp.domain.user.UserViewModel";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "areCredentialsValid,Local,com.dataart.booksapp.domain.user.UserCredentials";
+  permission javax.security.jacc.EJBMethodPermission "GenreServiceImpl", "remove,Local,com.dataart.booksapp.domain.genre.GenreViewModel";
+  permission javax.security.jacc.EJBMethodPermission "BookServiceImpl", "edit,Local,com.dataart.booksapp.domain.book.BookViewModel";
+  permission javax.security.jacc.EJBMethodPermission "UserServiceImpl", "addBookToFavorites,Local,com.dataart.booksapp.domain.book.BookViewModel,com.dataart.booksapp.domain.user.UserViewModel";
+};
+
+grant      principal * * {
+  permission javax.security.jacc.EJBRoleRefPermission "AuthorServiceImpl", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "UserServiceImpl", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "BookServiceImpl", "**";
+  permission javax.security.jacc.EJBRoleRefPermission "GenreServiceImpl", "**";
+};
+

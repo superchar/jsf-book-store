@@ -17,7 +17,7 @@
                     <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Edit book" action="#{bookPresenter.requestBookEditing}"/></li>
                     <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Read book" action="#{bookPresenter.readBook}"/></li>
                     <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Download book" action="#{bookPresenter.downloadBook}"/></li>
-                    <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Add to favorites" action="#{bookPresenter.addToFavorites}"/></li>
+                    <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Add to favorites" action="#{userPresenter.addToBookFavorites}"/></li>
                 </ui:define>
             </ui:decorate>
             </h:panelGroup>

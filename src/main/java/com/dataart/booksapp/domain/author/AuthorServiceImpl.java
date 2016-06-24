@@ -1,6 +1,7 @@
 package com.dataart.booksapp.domain.author;
 
 import com.dataart.booksapp.domain.general.GeneralMapper;
+import com.dataart.booksapp.domain.general.Preconditions;
 import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 
 import javax.ejb.Stateless;
@@ -21,6 +22,7 @@ public class AuthorServiceImpl implements AuthorService {
     }
 
     public List<AuthorViewModel> getInRange(int from, int quantity) {
+        Preconditions.throwIllegalArgumentIfNegativeValue(from, quantity);
         return AuthorModelMapper.mapFromDomainModelList(authorRepository.getInRange(from, quantity));
     }
 
@@ -36,7 +38,7 @@ public class AuthorServiceImpl implements AuthorService {
         authorRepository.add(AuthorModelMapper.mapFromView(addedAuthorModel));
     }
 
-    public void edit(AuthorViewModel authorViewModel) throws NotExistsException {
+    public void edit(AuthorViewModel authorViewModel){
         Author author = loadAuthorFromViewModel(authorViewModel);
         if (wasAuthorChangedAfterEditing(author, authorViewModel)) {
             author = AuthorModelMapper.updateAuthorAccordingViewModel(author, authorViewModel);

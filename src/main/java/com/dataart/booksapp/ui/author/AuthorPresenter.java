@@ -4,7 +4,7 @@ import com.dataart.booksapp.domain.author.AuthorService;
 import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 import com.dataart.booksapp.ui.author.data.AuthorLocalData;
 import com.dataart.booksapp.ui.author.data.AuthorSessionData;
-import com.dataart.booksapp.ui.general.AbstractPresenter;
+import com.dataart.booksapp.ui.general.helpers.MessageHelper;
 import com.dataart.booksapp.ui.general.routing.Router;
 import com.dataart.booksapp.ui.general.routing.Routes;
 
@@ -15,25 +15,27 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 
+
 /**
  * Created by vlobyntsev on 14.06.2016.
  */
 @ManagedBean
 @SessionScoped
 @Named
-public class AuthorPresenter extends AbstractPresenter implements Serializable {
+public class AuthorPresenter implements Serializable {
 
     @EJB
     private AuthorService authorService;
 
     @Inject
-    private AuthorSessionData authorSessionData;
+    private Router router;
 
     @Inject
     private AuthorLocalData authorLocalData;
 
     @Inject
-    private Router router;
+    private AuthorSessionData authorSessionData;
+
 
     public Routes addAuthor() {
         authorService.add(authorLocalData.getCurrentEntity());
@@ -45,7 +47,7 @@ public class AuthorPresenter extends AbstractPresenter implements Serializable {
             authorService.edit(authorSessionData.getCurrentEntity());
             return Routes.authorsList;
         } catch (NotExistsException ex) {
-            createGlobalMessage(ex.getMessage());
+             MessageHelper.createGlobalMessage(ex.getMessage());
         }
         return null;
     }

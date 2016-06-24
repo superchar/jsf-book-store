@@ -21,6 +21,6 @@ public interface AuthorService {
 
     void add(AuthorViewModel addedAuthorModel);
 
-    void edit(AuthorViewModel authorViewModel) throws NotExistsException;
+    void edit(AuthorViewModel authorViewModel);
 
 }

@@ -16,12 +16,6 @@ public class GenreRepository {
     @PersistenceContext(unitName = "books")
     private EntityManager entityManager;
 
-    public List<Genre> findByNamePrefix(String namePrefix) {
-        return entityManager.createNamedQuery("genre.findByPrefix", Genre.class)
-                .setParameter("namePrefix", "%" + namePrefix + "%")
-                .getResultList();
-    }
-
     public List<Genre> findByIds(List<Integer> genresIds){
         return entityManager.createNamedQuery("genre.findByIds",Genre.class)
                 .setParameter("genresIds",genresIds)
@@ -33,7 +27,7 @@ public class GenreRepository {
                 .getSingleResult();
     }
 
-    public boolean doesExistsWithName(String name){
+    boolean doesExistWithName(String name){
         return entityManager.createNamedQuery("genre.getCountForName",Long.class)
                 .setParameter("name",name)
                 .getSingleResult() > 0;
@@ -50,16 +44,23 @@ public class GenreRepository {
         return entityManager.find(Genre.class,id);
     }
 
-    public Genre addGenre(Genre genre){
+
+    List<Genre> findByNamePrefix(String namePrefix) {
+        return entityManager.createNamedQuery("genre.findByPrefix", Genre.class)
+                .setParameter("namePrefix", "%" + namePrefix + "%")
+                .getResultList();
+    }
+
+    Genre add(Genre genre){
         entityManager.persist(genre);
         return genre;
     }
 
-    public Genre editGenre(Genre genre){
+    Genre edit(Genre genre){
         return entityManager.merge(genre);
     }
 
-    public Genre removeGenre(Genre genre){
+    Genre remove(Genre genre){
         entityManager.remove(genre);
         return genre;
     }

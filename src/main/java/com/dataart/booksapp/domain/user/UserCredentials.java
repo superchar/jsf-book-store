@@ -5,13 +5,14 @@ package com.dataart.booksapp.domain.user;
  */
 public class UserCredentials {
 
+    private String email;
+
+    private String password;
+
     public UserCredentials(String userName, String password) {
         this.email = userName;
         this.password = password;
     }
-
-    private String email;
-    private String password;
 
     public String getEmail() {
         return email;

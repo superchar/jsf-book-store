@@ -5,16 +5,6 @@ package com.dataart.booksapp.domain.user;
  */
 public class UserModelMapper {
 
-    public static UserViewModel mapFromDomain(User user){
-        UserViewModel userViewModel = new UserViewModel();
-        userViewModel.setEmail(user.getEmail());
-        userViewModel.setFirstName(user.getFirstName());
-        userViewModel.setLastName(user.getLastName());
-        userViewModel.setIdUser(user.getIdUser());
-        userViewModel.setPassword(user.getPassword());
-        return userViewModel;
-    }
-
     public static User mapFromView(UserViewModel userViewModel){
         User user = new User();
         user.setEmail(userViewModel.getEmail());
@@ -23,5 +13,15 @@ public class UserModelMapper {
         user.setIdUser(userViewModel.getIdUser());
         user.setPassword(userViewModel.getPassword());
         return user;
+    }
+
+    static UserViewModel mapFromDomain(User user){
+        UserViewModel userViewModel = new UserViewModel();
+        userViewModel.setEmail(user.getEmail());
+        userViewModel.setFirstName(user.getFirstName());
+        userViewModel.setLastName(user.getLastName());
+        userViewModel.setIdUser(user.getIdUser());
+        userViewModel.setPassword(user.getPassword());
+        return userViewModel;
     }
 }

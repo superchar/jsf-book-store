@@ -23,44 +23,51 @@ public class UserRepository extends AbstractRepository implements Serializable {
     @PersistenceContext(unitName = "books")
     private EntityManager entityManager;
 
-    public User findById(int id){
-        return entityManager.find(User.class,id);
+    public User findById(int id) {
+        return entityManager.find(User.class, id);
     }
 
-    public User findByEmail(String email){
-        TypedQuery<User> query = entityManager.
-                createNamedQuery("user.findByEmail",User.class)
-                .setParameter("email",email);
-        return processSingleResult(query);
-    }
-
-    public User edit(User user){
+    public User edit(User user) {
         return entityManager.merge(user);
     }
 
-    public List<Book> getFavoriteBooks(int startPage,int quantity,User user){
-        return entityManager.createNamedQuery("user.getFavoriteBooks",Book.class)
-                .setParameter("userId",user.getIdUser())
+    public User add(User user) {
+        entityManager.persist(user);
+        return user;
+    }
+
+    boolean doesExistWithEmail(String email){
+        return entityManager.createNamedQuery("user.doesExistWithEmail",Boolean.class)
+                .setParameter("email",email)
+                .getSingleResult();
+    }
+
+    User findByEmail(String email) {
+        TypedQuery<User> query = entityManager.
+                createNamedQuery("user.findByEmail", User.class)
+                .setParameter("email", email);
+        return processSingleResult(query);
+    }
+
+    List<Book> getFavoriteBooks(int startPage, int quantity, User user) {
+        return entityManager.createNamedQuery("user.getFavoriteBooks", Book.class)
+                .setParameter("userId", user.getIdUser())
                 .setFirstResult(startPage)
                 .setMaxResults(quantity)
                 .getResultList();
     }
 
-    public boolean isBookInFavoriteList(User user,Book book){
-        return entityManager.createNamedQuery("user.isBookInFavoriteList",Boolean.class)
-                .setParameter("bookId",book.getIdBook())
-                .setParameter("userId",user.getIdUser())
+    boolean isBookInFavoriteList(User user, Book book) {
+        return entityManager.createNamedQuery("user.isBookInFavoriteList", Boolean.class)
+                .setParameter("bookId", book.getIdBook())
+                .setParameter("userId", user.getIdUser())
                 .getSingleResult();
     }
 
-    public long getFavoriteBooksCount(User user){
-        return entityManager.createNamedQuery("user.getFavoriteBooksCount",Long.class)
-                .setParameter("userId",user.getIdUser())
+    long getFavoriteBooksCount(User user) {
+        return entityManager.createNamedQuery("user.getFavoriteBooksCount", Long.class)
+                .setParameter("userId", user.getIdUser())
                 .getSingleResult();
     }
 
-    public User createNew(User user){
-        entityManager.persist(user);
-        return user;
-    }
 }

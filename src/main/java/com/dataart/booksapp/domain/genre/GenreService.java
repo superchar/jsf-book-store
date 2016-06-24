@@ -1,7 +1,6 @@
 package com.dataart.booksapp.domain.genre;
 
-import com.dataart.booksapp.domain.general.exceptions.ExistsException;
-import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
+import com.dataart.booksapp.domain.general.exceptions.ExistsWithException;
 
 import javax.ejb.Local;
 import java.util.List;
@@ -20,9 +19,9 @@ public interface GenreService {
 
     List<GenreViewModel> getInRange(int first,int quantity);
 
-    void editGenre(GenreViewModel editingGenreViewModel) throws NotExistsException,ExistsException;
+    void edit(GenreViewModel editingGenreViewModel);
 
-    void addGenre(GenreViewModel addingGenreModel);
+    void add(GenreViewModel addingGenreModel) ;
 
-    void remove(GenreViewModel removingGenreModel) throws NotExistsException;
+    void remove(GenreViewModel removingGenreModel);
 }

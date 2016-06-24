@@ -2,7 +2,7 @@ package com.dataart.booksapp.ui.book.pagination;
 
 import com.dataart.booksapp.domain.book.BookService;
 import com.dataart.booksapp.domain.book.BookViewModel;
-import com.dataart.booksapp.ui.general.LazyDataModelBase;
+import com.dataart.booksapp.ui.general.pagination.AbstractLazyDataModelBase;
 
 import javax.annotation.ManagedBean;
 import javax.ejb.EJB;
@@ -17,7 +17,7 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 @Named
-public class BookLazyDataModel extends LazyDataModelBase<BookViewModel> implements Serializable {
+public class BookLazyDataModel extends AbstractLazyDataModelBase<BookViewModel> implements Serializable {
 
     @EJB
     private BookService bookService;

@@ -11,11 +11,11 @@ public class GeneralMapper {
 
     public static <TModel, TViewModel> TModel loadModelFromViewModel(TViewModel viewModel, Function<TViewModel, Integer> idFetcher,
                                                                      Function<Integer, TModel> modelLoader) throws NotExistsException {
-        Preconditions.throwIllegalArgumentIfParamIsNull(viewModel);
+        Preconditions.throwIllegalArgumentIfParamIsNull(viewModel,"viewModel");
         Integer modelId = idFetcher.apply(viewModel);
         Preconditions.throwIllegalArgumentIfFalse(modelId > 0, String.format("Id of %s is not valid", viewModel.getClass().getName()));
         TModel targetModel = modelLoader.apply(modelId);
-        Preconditions.throwNotExistsIfNull(targetModel);
+        Preconditions.throwNotExistsIfNull(targetModel,targetModel.getClass().getName());
         return targetModel;
     }
 }

@@ -5,7 +5,6 @@ import com.dataart.booksapp.domain.author.AuthorModelMapper;
 import com.dataart.booksapp.domain.author.AuthorRepository;
 import com.dataart.booksapp.domain.author.AuthorViewModel;
 import com.dataart.booksapp.domain.general.GeneralMapper;
-import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 import com.dataart.booksapp.domain.general.Preconditions;
 import com.dataart.booksapp.domain.general.exceptions.PermissionDeniedException;
 import com.dataart.booksapp.domain.genre.*;
@@ -41,25 +40,24 @@ public class BookServiceImpl implements BookService {
     private UserRepository userRepository;
 
     public List<BookViewModel> getInRange(int from, int resultsQuantity) {
+        Preconditions.throwIllegalArgumentIfNegativeValue(from,resultsQuantity);
         return BookModelMapper.mapFromDomainList(bookRepository.getInRange(from, resultsQuantity));
     }
 
     @Override
     public void add(BookViewModel bookViewModel, UserViewModel currentUserViewModel)throws IOException {
-        throwIllegalArgumentIfBookOrUserIsNull(bookViewModel,currentUserViewModel);
-        List<Genre> genres = genreRepository.findByIds(GenreModelMapper.mapViewListToIds(bookViewModel.getGenres()));
-        Preconditions.throwEmptyCollectionIfEmpty(genres,"Genres list is empty");
-        List<Author> authors = authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(bookViewModel.getAuthors()));
-        Preconditions.throwEmptyCollectionIfEmpty(authors,"Authors list is empty");
+        throwIllegalArgumentIfBookIsNull(bookViewModel);
+        throwIllegalArgumentIfUserIsNull(currentUserViewModel);
+        Book newBook = buildNewBookFromViewModel(bookViewModel);
         User currentUser = loadUserFromViewModel(currentUserViewModel);
-        Book newBook = buildNewBook(bookViewModel, genres, authors);
         newBook.setCreator(currentUser);
         bookRepository.add(newBook);
     }
 
     @Override
-    public void remove(BookViewModel bookViewModel, UserViewModel currentUserViewModel) throws PermissionDeniedException {
-        throwIllegalArgumentIfBookOrUserIsNull(bookViewModel,currentUserViewModel);
+    public void remove(BookViewModel bookViewModel, UserViewModel currentUserViewModel) {
+        throwIllegalArgumentIfBookIsNull(bookViewModel);
+        throwIllegalArgumentIfUserIsNull(currentUserViewModel);
         User currentUser = loadUserFromViewModel(currentUserViewModel);
         Book removingBook = loadBookFromViewModel(bookViewModel);
         if (removingBook.getCreator().getIdUser() != currentUser.getIdUser()) {
@@ -74,6 +72,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public BookViewModel edit(BookViewModel bookViewModel) throws IOException {
+        throwIllegalArgumentIfBookIsNull(bookViewModel);
         Book editingBook = loadBookFromViewModel(bookViewModel);
         if (wasBookChangedAfterUpdating(editingBook, bookViewModel)) {
             editingBook = updateBook(editingBook, bookViewModel);
@@ -89,11 +88,13 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public List<BookViewModel> findByCreator(int first, int quantity, UserViewModel creatorViewModel) {
+        throwIllegalArgumentIfUserIsNull(creatorViewModel);
         return BookModelMapper.mapFromDomainList(bookRepository.findByCreator(first, quantity, UserModelMapper.mapFromView(creatorViewModel)));
     }
 
     @Override
     public long getCountByCreator(UserViewModel creatorViewModel) {
+        throwIllegalArgumentIfUserIsNull(creatorViewModel);
         return bookRepository.getCountByCreator(UserModelMapper.mapFromView(creatorViewModel));
     }
 
@@ -107,21 +108,21 @@ public class BookServiceImpl implements BookService {
     }
 
     private boolean wereAuthorsChangedAfterUpdating(Book oldBook, BookViewModel editedBook) {
-        return !this.areCollectionsEqual(oldBook.getAuthors(),
+        return !areCollectionsEqual(oldBook.getAuthors(),
                 editedBook.getAuthors(),
                 Author::getIdAuthor,
                 AuthorViewModel::getAuthorId);
     }
 
-    private boolean wasBookdataChangedAfterUpdating(BookViewModel bookViewModel) {
-        return bookViewModel.getBookDataPart() != null && bookViewModel.getBookDataPart().getSize() > 0;
-    }
-
     private boolean wereGenresChangedAfterUpdating(Book oldBook, BookViewModel editedBook) {
-        return this.areCollectionsEqual(oldBook.getGenres(),
+        return !areCollectionsEqual(oldBook.getGenres(),
                 editedBook.getGenres(),
                 Genre::getIdGenre,
                 GenreViewModel::getIdGenre);
+    }
+
+    private boolean wasBookdataChangedAfterUpdating(BookViewModel bookViewModel) {
+        return bookViewModel.getBookDataPart() != null && bookViewModel.getBookDataPart().getSize() > 0;
     }
 
     private <TFirst, TSecond, TProperty> boolean areCollectionsEqual(Collection<TFirst> firstCollection,
@@ -141,18 +142,18 @@ public class BookServiceImpl implements BookService {
         oldBook.setTitle(editedBook.getTitle());
         oldBook.setIsbn(editedBook.getIsbn());
         oldBook.setDescription(editedBook.getDescription());
-        oldBook.setGenres(genreRepository.findByIds(GenreModelMapper.mapViewListToIds(editedBook.getGenres())));
-        oldBook.setAuthors(authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(editedBook.getAuthors())));
+        oldBook.setGenres(loadGenresFromViewModel(editedBook));
+        oldBook.setAuthors(loadAuthorsFromViewModel(editedBook));
         if (wasBookdataChangedAfterUpdating(editedBook)) {
             oldBook = mapBookDataPartToByteArray(oldBook, editedBook);
         }
         return oldBook;
     }
 
-    private Book buildNewBook(BookViewModel bookViewModel, List<Genre> genres, List<Author> authors) throws IOException {
+    private Book buildNewBookFromViewModel(BookViewModel bookViewModel) throws IOException {
         Book newBook = BookModelMapper.mapFromView(bookViewModel);
-        newBook.getGenres().addAll(genres);
-        newBook.getAuthors().addAll(authors);
+        newBook.getGenres().addAll(loadGenresFromViewModel(bookViewModel));
+        newBook.getAuthors().addAll(loadAuthorsFromViewModel(bookViewModel));
         newBook = mapBookDataPartToByteArray(newBook, bookViewModel);
         return newBook;
     }
@@ -163,16 +164,31 @@ public class BookServiceImpl implements BookService {
         return book;
     }
 
-    private Book loadBookFromViewModel(BookViewModel bookViewModel) throws NotExistsException {
+    private Book loadBookFromViewModel(BookViewModel bookViewModel) {
         return GeneralMapper.loadModelFromViewModel(bookViewModel, BookViewModel::getIdBook, bookRepository::findById);
     }
 
-    private User loadUserFromViewModel(UserViewModel userViewModel) throws NotExistsException {
+    private User loadUserFromViewModel(UserViewModel userViewModel)  {
         return GeneralMapper.loadModelFromViewModel(userViewModel, UserViewModel::getIdUser, userRepository::findById);
     }
 
-    private void throwIllegalArgumentIfBookOrUserIsNull(BookViewModel bookViewModel,UserViewModel userViewModel){
+    private void throwIllegalArgumentIfBookIsNull(BookViewModel bookViewModel){
         Preconditions.throwIllegalArgumentIfParamIsNull(bookViewModel,"bookViewModel");//.Net nameof would be suitable here..
+    }
+
+    private void throwIllegalArgumentIfUserIsNull(UserViewModel userViewModel){
         Preconditions.throwIllegalArgumentIfParamIsNull(userViewModel,"userViewModel");
+    }
+
+    private List<Genre> loadGenresFromViewModel(BookViewModel bookViewModel){
+        List<Genre> genres = genreRepository.findByIds(GenreModelMapper.mapViewListToIds(bookViewModel.getGenres()));
+        Preconditions.throwEmptyCollectionIfEmpty(genres,"Genres list is empty");
+        return genres;
+    }
+
+    private List<Author> loadAuthorsFromViewModel(BookViewModel bookViewModel){
+        List<Author> authors = authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(bookViewModel.getAuthors()));
+        Preconditions.throwEmptyCollectionIfEmpty(authors,"Authors list is empty");
+        return authors;
     }
 }

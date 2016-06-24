@@ -26,10 +26,10 @@ public class UserProfilePresenter implements Serializable {
     private BookPresenter bookPresenter;
 
     @Inject
-    private UserCreatedBookLocalData userCreatedBookLocalData;
+    private BookLocalData bookLocalData;
 
     @Inject
-    private BookLocalData bookLocalData;
+    private UserCreatedBookLocalData userCreatedBookLocalData;
 
     public Routes downloadCreatedBook(){
         replaceBookLocalDataWithUserCreated();

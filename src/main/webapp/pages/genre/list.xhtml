@@ -21,7 +21,7 @@
         </h:panelGroup>
         <h:panelGroup layout="block" styleClass="col-md-8">
         <h:form id="form">
-        <p:dataTable var="genre" value="#{genreLazyDataModel}"  paginator="true" rows="10"
+        <p:dataTable var="genre" value="#{genreAbstractLazyDataModelBase}" paginator="true" rows="10"
                      selectionMode="single" selection="#{genreLocalData.currentEntity}"
                      paginatorTemplate="{FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
                      lazy="true">

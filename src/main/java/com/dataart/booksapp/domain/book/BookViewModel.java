@@ -68,6 +68,14 @@ public class BookViewModel {
         this.bookDataPart = bookDataPart;
     }
 
+    public String getBookDataText() {
+        return bookDataText;
+    }
+
+    public void setBookDataText(String bookDataText) {
+        this.bookDataText = bookDataText;
+    }
+
     public List<AuthorViewModel> getAuthors() {
         return authors;
     }
@@ -82,14 +90,6 @@ public class BookViewModel {
 
     public void setGenres(List<GenreViewModel> genres) {
         this.genres = genres;
-    }
-
-    public String getBookDataText() {
-        return bookDataText;
-    }
-
-    public void setBookDataText(String bookDataText) {
-        this.bookDataText = bookDataText;
     }
 
     @Override

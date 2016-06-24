@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:com="http://java.sun.com/jsf/composite/custom-components"
+      xmlns:p="http://primefaces.org/ui">
+
+
+<ui:decorate template="/templates/general.xhtml">
+    <ui:define name="content">
+        <p:tabView  style="border:none;" id="tabs">
+            <p:tab title="Favorite books">
+                <h:panelGroup layout="block" styleClass="col-md-2">
+                    <h:panelGroup layout="block" id="favorite-books-menu-items">
+                        <ui:decorate template="/templates/leftmenu.xhtml">
+                            <ui:define name="menuItems">
+                                <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Read book"  action="#{bookPresenter.readBook}"/></li>
+                                <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Download book"  action="#{bookPresenter.downloadBook}"/></li>
+                            </ui:define>
+                        </ui:decorate>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="col-md-8">
+                    <com:booklist selection="#{bookLocalData.currentEntity}"
+                                  render="tabs:favorite-books-menu-items"
+                                  rowSelectCallback="#{controlsLocalState.enableGeneral()}"
+                                  lazyDataModel="#{favoriteBooksAbstractLazyDataModelBase}"/>
+                </h:panelGroup>
+            </p:tab>
+            <p:tab title="Created books">
+                <h:panelGroup layout="block" styleClass="col-md-2">
+                    <h:panelGroup layout="block" id="created-books-menu-items">
+                        <ui:decorate template="/templates/leftmenu.xhtml">
+                            <ui:define name="menuItems">
+                                <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Read book"  action="#{userProfilePresenter.readCreatedBook}"/></li>
+                                <li role="presentation" class="#{controlsLocalState.generalEnabled?'':'disabled'}"><h:commandLink value="Download book" action="#{userProfilePresenter.downloadCreatedBook}"/></li>
+                                <li role="presentation" class="#{controlsLocalState.deletingEnabled?'':'disabled'}"><h:commandLink value="Remove book" action="#{bookPresenter.removeBook}">
+                                    <p:ajax update="tabs:created-books tabs:created-books-menu-items"/>
+                                </h:commandLink></li>
+                            </ui:define>
+                        </ui:decorate>
+                    </h:panelGroup>
+                </h:panelGroup>
+                <h:panelGroup layout="block" styleClass="col-md-8">
+                <h:panelGroup layout="block" id="created-books">
+                    <com:booklist selection="#{userCreatedBookLocalData.currentEntity}"
+                                  render="tabs:created-books-menu-items"
+                                  rowSelectCallback="#{controlsLocalState.enableAll()}"
+                                  lazyDataModel="#{createdBooksAbstractLazyDataModelBase}"/>
+                    </h:panelGroup>
+                </h:panelGroup>
+            </p:tab>
+        </p:tabView>
+    </ui:define>
+</ui:decorate>
+</html>
