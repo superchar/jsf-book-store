@@ -1,4 +1,4 @@
-package com.dataart.booksapp.ui.genre.list;
+package com.dataart.booksapp.ui.genre.pagination;
 
 import com.dataart.booksapp.domain.genre.GenreService;
 import com.dataart.booksapp.domain.genre.GenreViewModel;
@@ -16,7 +16,7 @@ import java.util.List;
 @ManagedBean
 @SessionScoped
 @Named
-public class GenreAbstractLazyDataModelBase extends AbstractLazyDataModelBase<GenreViewModel> {
+public class GenreLazyDataModel extends AbstractLazyDataModelBase<GenreViewModel> {
 
     @EJB
     private GenreService genreService;

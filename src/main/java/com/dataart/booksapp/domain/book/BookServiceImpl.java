@@ -182,13 +182,13 @@ public class BookServiceImpl implements BookService {
 
     private List<Genre> loadGenresFromViewModel(BookViewModel bookViewModel){
         List<Genre> genres = genreRepository.findByIds(GenreModelMapper.mapViewListToIds(bookViewModel.getGenres()));
-        Preconditions.throwEmptyCollectionIfEmpty(genres,"Genres list is empty");
+        Preconditions.throwEmptyCollectionIfEmpty(genres,"Genres pagination is empty");
         return genres;
     }
 
     private List<Author> loadAuthorsFromViewModel(BookViewModel bookViewModel){
         List<Author> authors = authorRepository.findByIds(AuthorModelMapper.mapViewListToIds(bookViewModel.getAuthors()));
-        Preconditions.throwEmptyCollectionIfEmpty(authors,"Authors list is empty");
+        Preconditions.throwEmptyCollectionIfEmpty(authors,"Authors pagination is empty");
         return authors;
     }
 }

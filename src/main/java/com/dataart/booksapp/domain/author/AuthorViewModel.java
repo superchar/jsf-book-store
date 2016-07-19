@@ -47,10 +47,6 @@ public class AuthorViewModel {
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof AuthorViewModel){
-            AuthorViewModel otherAuthorViewModel = (AuthorViewModel) other;
-            return this.getAuthorId() == otherAuthorViewModel.getAuthorId();
-        }
-        return false;
+        return (other instanceof AuthorViewModel) && ((AuthorViewModel) other).getAuthorId() == this.getAuthorId();
     }
 }

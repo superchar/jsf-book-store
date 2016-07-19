@@ -5,6 +5,7 @@ import com.dataart.booksapp.domain.general.exceptions.NotExistsException;
 import com.dataart.booksapp.domain.user.User;
 import com.dataart.booksapp.domain.user.UserCredentials;
 import com.dataart.booksapp.domain.user.UserService;
+import com.dataart.booksapp.domain.user.UserViewModel;
 import com.dataart.booksapp.ui.book.data.BookLocalData;
 import com.dataart.booksapp.ui.general.helpers.MessageHelper;
 import com.dataart.booksapp.ui.general.routing.Router;

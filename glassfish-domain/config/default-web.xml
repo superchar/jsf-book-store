@@ -270,7 +270,7 @@
   <!--   initial-capacity    Same as initialCapacity. If both are specified,-->
   <!--                       initialCapacity takes precedence               -->
   <!--                                                                      -->
-  <!--   httpMethods         Comma separated list of HTTP methods supported -->
+  <!--   httpMethods         Comma separated pagination of HTTP methods supported -->
   <!--                       by the JspServlet. Wildcard ("*") denotes      -->
   <!--                       "ALL METHODS". [ALL METHODS]                   -->
   <!--                                                                      -->
@@ -288,7 +288,7 @@
   <!--   compilerTargetVM    Generates class files for specified VM version -->
   <!--                       (same as -target javac command-line switch)    -->
   <!--                                                                      -->
-  <!--   system-jar-includes Specify a list (of jars, or fragments of jar   -->
+  <!--   system-jar-includes Specify a pagination (of jars, or fragments of jar   -->
   <!--                       paths) that is used to determine if a system   -->
   <!--                       jar (obtained from the system classloader)     -->
   <!--                       should be included in the javac classpath      -->
@@ -1178,7 +1178,7 @@
   <!-- or returns a 404 status, depending on how it is configured.          -->
   <!--                                                                      -->
   <!-- If you define welcome files in your own application's web.xml        -->
-  <!-- deployment descriptor, that list *replaces* the list configured      -->
+  <!-- deployment descriptor, that pagination *replaces* the pagination configured      -->
   <!-- here, so be sure that you include any of the default values that     -->
   <!-- you wish to include.                                                 -->
 

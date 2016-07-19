@@ -27,10 +27,6 @@ public class GenreViewModel {
 
     @Override
     public boolean equals(Object other) {
-        if(other instanceof GenreViewModel){
-            GenreViewModel model = (GenreViewModel) other;
-            return this.getIdGenre() == model.getIdGenre();
-        }
-        return false;
+        return (other instanceof GenreViewModel) && ((GenreViewModel)other).getIdGenre() == this.getIdGenre();
     }
 }

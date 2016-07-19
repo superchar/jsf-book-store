@@ -33,8 +33,6 @@ public class BookAutocompletePresenter implements Serializable {
     private BookLocalData bookLocalData;
 
     public List<AuthorViewModel> completeAuthor(String namePrefix) {
-        List<AuthorViewModel> authors = bookLocalData.getCurrentEntity().getAuthors();
-        String test = "test";
         return authorService.findByNamePrefix(namePrefix)
                 .stream()
                 .filter(a->!bookLocalData.getCurrentEntity().getAuthors().contains(a))

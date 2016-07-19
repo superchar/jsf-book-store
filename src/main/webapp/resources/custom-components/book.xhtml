@@ -75,6 +75,8 @@
                             var="genre"
                             itemValue="#{genre}"
                             itemLabel="#{genre.name}">
+                        <p:ajax event="itemSelect"/>
+                        <p:ajax event="itemUnselect"/>
                     </p:autoComplete>
                 </h:panelGroup>
                 <h:commandButton styleClass="btn btn-info" value="#{cc.attrs.sumbitingLabel}" action="#{cc.attrs.sumbitingAction}"/>
